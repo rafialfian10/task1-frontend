@@ -6,8 +6,7 @@
 
 .cards {
     width: 85vw;
-    margin: auto;
-    margin-top: 100px;
+    margin: 100px auto;
     gap: 25px;
     padding-top: 320px;
 }
@@ -17,15 +16,20 @@
     overflow: hidden;
 }
 
+.card img {
+    margin-bottom: 5px !important;
+}
+
 .title {
     font-weight: bold;
     text-align: center !important;
-    margin: 0px;
-    margin-bottom: 5px;
+    margin: 0px !important;
+    margin-bottom: 10px !important;
 }
 
 .info {
-    margin: 0px;
     font-size: 15px;
     text-align: center !important;
+    margin: 0px !important;
+    margin-bottom: 10px !important;
 }

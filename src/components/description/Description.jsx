@@ -19,7 +19,7 @@ const Description = () => {
                     <div className='accomodation'>
                         <p>Accomodation</p>
                         <div>
-                            <img src={hotel}/>
+                            <img src={hotel} alt=""/>
                             <h6>Hotel 4 Nights</h6>
                         </div>
                     </div>
@@ -27,7 +27,7 @@ const Description = () => {
                     <div className='transportation'>
                         <p>Transportation</p>
                         <div>
-                            <img src={transportation}/>
+                            <img src={transportation} alt=""/>
                             <h6>Qatar Airways</h6>
                         </div>
                     </div>
@@ -35,7 +35,7 @@ const Description = () => {
                     <div className='eat'>
                         <p>Eat</p>
                         <div>
-                            <img src={eat}/>
+                            <img src={eat} alt=""/>
                             <h6>Included Itinerary</h6>
                         </div>
                     </div>
@@ -43,7 +43,7 @@ const Description = () => {
                     <div className='duration'>
                         <p>Duration</p>
                         <div>
-                            <img src={duration}/>
+                            <img src={duration} alt=""/>
                             <h6>6 Days 4 Nights</h6>
                         </div>
                     </div>
@@ -51,7 +51,7 @@ const Description = () => {
                     <div className='datetrip'>
                         <p>Date Trip</p>
                         <div>
-                            <img src={date}/>
+                            <img src={date} alt=""/>
                             <h6>26 August 2020</h6>
                         </div>
                     </div>
@@ -71,11 +71,11 @@ const Description = () => {
                             </div>
                             <div className='sub-line2'>
                                 <button type='submit' className='minus'>
-                                    <img src={minus}/>
+                                    <img src={minus} alt=""/>
                                 </button>
                                 <h4 className='value'>1</h4>
                                 <button type='submit' className='plus'>
-                                    <img src={plus}/>
+                                    <img src={plus} alt=""/>
                                 </button>
                             </div>
                         </div>

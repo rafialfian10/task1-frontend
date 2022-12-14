@@ -11,10 +11,12 @@ import Jumbotron from "../components/jumbotron/Jumbotron";
 import Card1 from "../components/card1/Card1";
 import Card2 from "../components/card2/Card2";
 import Footer from "../components/footer/Footer";
+import Navbar from "../components/navbar/Navbar";
 
 const Home = () => {
     return (
         <>
+            <Navbar/>
             <Jumbotron/>
             <Card1/>
             <Card2/>

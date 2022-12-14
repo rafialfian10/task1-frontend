@@ -13,14 +13,26 @@
     text-align: center;
 }
 
-.login, .register {
+.login {
     text-align: center;
     width: 100px;
-    background-color: rgb(255, 166, 0);
-    color: white;
+    background-color: transparent;
+    color: white !important;
     margin-right: 10px;
     margin-left: 10px;
     border-radius: 5px;
-    border: 1px solid rgb(88, 58, 0);
+    border: 1px solid white;
+    align-self: flex-end;
+}
+
+.register {
+    text-align: center;
+    width: 100px;
+    background-color: rgb(255, 166, 0);
+    color: white !important;
+    margin-right: 10px;
+    margin-left: 10px;
+    border-radius: 5px;
+    border: 1px solid white;
     align-self: flex-end;
 }
