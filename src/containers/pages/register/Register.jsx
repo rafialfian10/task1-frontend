@@ -11,7 +11,7 @@ import leaf3 from '../../../assets/img/leaf3.png'
 const Register = () => {
   return (
     <>
-      <h1 className='title'>Register</h1>
+      <h1 className='title-register'>Register</h1>
       <img src={leaf2} alt="" className='leaf2' />
       <img src={leaf3} alt="" className='leaf3'/>
       <Form className='form'>

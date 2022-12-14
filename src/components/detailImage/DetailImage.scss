@@ -5,21 +5,25 @@
     letter-spacing: 0.5px;
 }
 
-h1 {
-    font-weight: bold !important;
-    margin-top: 30px !important;
-    margin-left: 30px;
+.title-detail {
+    text-align: left;
+    padding-left: 200px;
+    font-weight: bold;
+    margin: 0px;
+    margin-top: 60px !important;
 }
 
-p {
-    font-weight: bold;
-    margin-left: 30px;
+
+.title-country {
+    text-align: left !important;
+    padding-left: 200px;
+    font-weight: bold !important;
+    margin-bottom: 30px !important;
     color: grey;
 }
 
 .thumbnail {
     width: 70vw;
-    height: 500px;
     margin: auto;
     margin-bottom: 50px;    
 }

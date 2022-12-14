@@ -8,14 +8,14 @@ import './DetailImage.scss'
 const DetailImage = () => {
     return (
         <>
-                <h1>6D/4N Fun Tassie Vacation + Sidney</h1>
-                <p>Australia</p>
+                <h1 className='title-detail'>6D/4N Fun Tassie Vacation + Sidney</h1>
+                <p className='title-country'>Australia</p>
                 <div className="thumbnail">
-                    <img src={detail1} className="img-thumbnail"/>
+                    <img src={detail1} className="img-thumbnail" alt=""/>
                     <div className="img-thumbnail thumb">
-                        <img src={detail2} style={{width:'22vw'}}/>
-                        <img src={detail3} style={{width:'22vw'}}/>
-                        <img src={detail4} style={{width:'22vw'}}/>
+                        <img src={detail2} style={{width:'22vw'}} alt=""/>
+                        <img src={detail3} style={{width:'22vw'}} alt=""/>
+                        <img src={detail4} style={{width:'22vw'}} alt=""/>
                     </div>
                 </div>
         </>

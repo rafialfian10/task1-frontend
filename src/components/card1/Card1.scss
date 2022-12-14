@@ -14,16 +14,18 @@
 .card {
     border-radius: 5px;
     overflow: hidden;
+    padding: 0px !important;
 }
 
 .card img {
+    margin: 0px !important;
     margin-bottom: 5px !important;
 }
 
-.title {
+.card .title {
+    width: 100%;
     font-weight: bold;
-    text-align: center !important;
-    margin: 0px !important;
+    margin: 0px !important ;    
     margin-bottom: 10px !important;
 }
 

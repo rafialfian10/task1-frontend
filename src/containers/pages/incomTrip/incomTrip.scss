@@ -1,0 +1,28 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+.title {
+    width: 85vw;
+    margin: 50px auto !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title h4 {
+    margin: 0px !important;
+    font-weight: bold;
+}
+
+.title button {
+    width: 100px;
+    height: 40px;
+    border-radius: 5px;
+    border: none;
+    background-color: orange;
+    color: white;
+    font-weight: bold;
+}

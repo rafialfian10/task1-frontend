@@ -13,7 +13,7 @@ import view6 from '../../assets/img/view6.png'
 const Card2 = ()  =>{
   return (
     <>
-    <h1 className='title'>Group Tour</h1>
+    {/* <h1 className='title'>Group Tour</h1> */}
             <CardGroup className="cards2">
                 <div className="card2">
                 <div className='page'>
@@ -21,7 +21,7 @@ const Card2 = ()  =>{
                 </div>
                     <Card.Img variant="top" src={view1}/>
                     <Card.Body>
-                    <Card.Title className="card-title">6D/4N Fun Tessie Vacation...</Card.Title>
+                    <Card.Title className="card-title">6D/4N Fun Tassie Vacation...</Card.Title>
                     <div className="card-info">
                         <Card.Text className="price">IDR. 12,398,000</Card.Text>
                         <Card.Text className="country">Australia</Card.Text>
@@ -78,7 +78,7 @@ const Card2 = ()  =>{
                     <Card.Img variant="top" src={view5} />
                     <Card.Body>
                     <Card.Title className="card-title">4D/3N Labuan Bajo Delight</Card.Title>
-                    <div className="">
+                    <div className="card-info">
                         <Card.Text className="price">IDR. 10,488,000</Card.Text>
                         <Card.Text className="country">Indonesia</Card.Text>
                     </div>
