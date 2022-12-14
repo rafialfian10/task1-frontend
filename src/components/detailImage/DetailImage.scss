@@ -1,0 +1,38 @@
+* {
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+    letter-spacing: 0.5px;
+}
+
+h1 {
+    font-weight: bold !important;
+    margin-top: 30px !important;
+    margin-left: 30px;
+}
+
+p {
+    font-weight: bold;
+    margin-left: 30px;
+    color: grey;
+}
+
+.thumbnail {
+    width: 70vw;
+    height: 500px;
+    margin: auto;
+    margin-bottom: 50px;    
+}
+
+.thumb {
+    width: 70vw;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 3px !important;
+}
+
+.img-thumbnail {
+    margin-bottom: 10px;
+    border: none;
+}
