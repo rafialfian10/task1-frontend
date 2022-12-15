@@ -1,4 +1,4 @@
-import Navbar from "../../../components/navbar/Navbar"
+import Navbar from "../../../components/navbar/Navbar";
 import Footer from "../../../components/footer/Footer"
 import Table from 'react-bootstrap/Table';
 

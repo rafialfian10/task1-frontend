@@ -60,7 +60,7 @@ const Profile = () => {
 
             {/* History Trip */}
             <h1 className='title-history-trip'>History Trip</h1>
-            <div className="payment-container">
+            <div className="history-container">
                 <div className="content1">
                     <img src={icon} alt="" />
                     <div className="sub-content1">
@@ -70,14 +70,14 @@ const Profile = () => {
                 </div>
 
                 <div className="content2">
-                    <div className="info-payment">
+                    <div className="history-payment">
                         <h3 className="title">6D/4N Fun Tassie Vacation</h3>
                         <p className="country">Australia</p>
                         <p className="status-payment">Approve</p>
                     </div>
 
-                    <div className="info-tour">
-                        <div className="sub-info-tour">
+                    <div className="history-tour">
+                        <div className="sub-history-tour">
                             <div className="date">
                                 <h5>Date Trip</h5>
                                 <p>26 August 2020</p>
@@ -99,7 +99,7 @@ const Profile = () => {
                         </div>
                     </div>
 
-                    <div className="img-payment">
+                    <div className="qr-code">
                         <img src={qr_code} alt="" />
                         <p>TCK0101</p>
                     </div>
