@@ -52,6 +52,7 @@
 
 .card-info {
     display: flex;
+    justify-content: space-around;
     margin-bottom: 0px;
 }
 
@@ -61,14 +62,18 @@
     margin-bottom: 15px;
 }
 
-.price {
-    margin: 0px;
+.card-title:hover {
+    cursor: pointer;
+}
+
+.card-info .price {
+    margin: 0px !important;
     color: orange;
     text-align: left !important;
 }
 
-.country {
-    margin: 0px;
+.card-info .country {
+    margin: 0px !important;
     color: grey;
     font-weight: bold;
     text-align: right !important;

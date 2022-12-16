@@ -38,7 +38,7 @@ const Description = () => {
                         </div>
                     </div>
 
-                    <div className='duration'>
+                    <div className='durations'>
                         <p>Duration</p>
                         <div>
                             <img src={duration} alt=""/>

@@ -2,7 +2,6 @@
     padding: 0px;
     margin: 0px;
     box-sizing: border-box;
-    letter-spacing: 0.5px;
 }
 
 .title-detail {
@@ -10,7 +9,7 @@
     padding-left: 200px;
     font-weight: bold;
     margin: 0px;
-    margin-top: 60px !important;
+    margin-top: 150px !important;
 }
 
 
@@ -25,7 +24,7 @@
 .thumbnail {
     width: 70vw;
     margin: auto;
-    margin-bottom: 50px;    
+    margin-bottom: 50px;   
 }
 
 .thumb {
@@ -37,6 +36,7 @@
 }
 
 .img-thumbnail {
+    width: 100%;
     margin-bottom: 10px;
     border: none;
 }

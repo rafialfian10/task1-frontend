@@ -1,4 +1,4 @@
-.title-login {
+.title-register {
     text-align: center;
     font-weight: bold;
     margin: 0px;
@@ -6,13 +6,13 @@
     margin-bottom: 60px !important;
 }
 
-.modal-login {
+.modal-register {
     width: 100vw !important;
     margin: auto !important;
     padding-top: 50px !important;
 }
 
-.form-login {
+.modal-body-register {
     width: 100% !important;
     border-radius: 5px;
     overflow: hidden;
@@ -57,14 +57,11 @@ p {
     color: grey;
     font-weight: normal;
     text-align: center;
-    margin-right: 10px !important;
 }
 
-.btn-show-register {
-    margin-left: 10px;
+a {
     color: grey !important;
-    background-color: transparent;
+    text-decoration: none !important;
     font-weight: bold;
-    border: none;
 }
 

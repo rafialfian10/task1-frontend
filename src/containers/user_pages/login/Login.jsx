@@ -11,17 +11,17 @@ import './Login.scss'
 import leaf2 from '../../../assets/img/leaf2.png'
 import leaf3 from '../../../assets/img/leaf3.png'
 
-function Login() {
-  const [show, setShow] = useState(false);
+function Login(props) {
+  const [showLog, setShowLog] = useState(false);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleCloseLog = () => setShowLog(false);
+  const handleShowLog = () => setShowLog(true);
 
   return (
     <>
-      <Nav.Link className='login' onClick={handleShow}>Login</Nav.Link>
+      <Nav.Link className='login' onClick={handleShowLog}>Login</Nav.Link>
 
-      <Modal show={show} onHide={handleClose} className='modal-login' >
+      <Modal show={showLog} onHide={handleCloseLog} className='modal-login' >
         <Modal.Body className='form-login'>
           <h1 className='title-login'>Login</h1>
           <img src={leaf2} alt="" className='leaf2' />
@@ -36,7 +36,7 @@ function Login() {
               <Form.Control type="password"/>
             </Form.Group>
             <Button variant="primary" type="submit" className='button-submit'>Submit</Button>
-            <p>Don't have an account?<a href='/register'> Click here</a></p>
+            <p>Don't have an account?<button className='btn-show-register'> Click here</button></p>
           </Form>
         </Modal.Body>
       </Modal>

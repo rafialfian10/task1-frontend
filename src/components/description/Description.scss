@@ -2,7 +2,6 @@
     padding: 0px;
     margin: 0px;
     box-sizing: border-box;
-    letter-spacing: 0.5px;
 }
 
 .desc-container {
@@ -23,13 +22,13 @@ div.info {
 }
 
 
-.accomodation, .transportation, .eat, .duration, .datetrip {
+.accomodation, .transportation, .eat, .durations, .datetrip {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
 }
 
-.accomodation div, .transportation div, .eat div, .duration div, .datetrip div {
+.accomodation div, .transportation div, .eat div, .durations div, .datetrip div {
     width: 100%;
     display: flex;
     align-items: center !important;
@@ -42,7 +41,7 @@ div.info {
 }
 
 .info h6 {
-    margin: 0px;
+    margin: 0px !important;
 }
 
 .info p {

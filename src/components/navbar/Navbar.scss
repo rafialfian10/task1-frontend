@@ -1,38 +1,73 @@
 .background-navbar {
-    width: 99vw;
+    position: fixed;
+    top: 0px;
+    width: 100vw;
     height: 80px;
     background-image: url(../../assets/img/navbar-background.png);
     background-repeat: no-repeat;
     background-size: cover;
+    z-index: 999 !important;
 }
 
 .sub-navbar {
-    width: 100%;
+    position: relative;
+    width: 70vw !important;
     display: flex;
     justify-content: flex-end;
-    text-align: center;
+    align-items: center !important;
 }
 
 .login {
-    text-align: center;
     width: 100px;
+    margin: auto 10px !important;
+    text-align: center;
     background-color: transparent;
     color: white !important;
-    margin-right: 10px;
-    margin-left: 10px;
     border-radius: 5px;
     border: 1px solid white;
-    align-self: flex-end;
 }
 
 .register {
-    text-align: center;
     width: 100px;
+    margin: auto 10px !important;
+    text-align: center;
     background-color: rgb(255, 166, 0);
     color: white !important;
-    margin-right: 10px;
-    margin-left: 10px;
     border-radius: 5px;
     border: 1px solid white;
-    align-self: flex-end;
+}
+
+.photo-profile {
+    position: relative !important;
+}
+
+.dropdown {
+    width: 45px !important;
+    height: 48px !important;
+    position: absolute !important;
+    top: 7px !important;
+    right: 18px !important;
+    border-radius: 50%;
+    background-color: transparent !important;
+}
+
+.toggle-navbar {
+    width: 48px !important;
+    height: 48px !important;
+    position: absolute !important;
+    top: -55px !important;
+    right: 4px !important;
+    border-radius: 50% !important;
+    border: none;
+    background-color: transparent !important;
+}
+
+.menu-dropdown {
+    height: 150px !important;
+    margin-left: -120px !important;
+    margin-top: 20px !important;
+}
+
+.menu-dropdown img {
+    margin-bottom: 10px !important;
 }

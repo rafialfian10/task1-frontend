@@ -4,8 +4,6 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 // import Navbars from "./components/navbar/Navbar";
 import Home from "./Home/Home";
 import Detail from "./containers/user_pages/detail/Detail";
-import Register from "./containers/user_pages/register/Register";
-import Login from "./containers/user_pages/login/Login";
 import Payment from "./containers/user_pages/payment/Payment";
 import IncomTrip from "./containers/admin_pages/incomTrip/incomTrip";
 import ListTransaction from "./containers/admin_pages/list_transaction/ListTransaction";
@@ -19,13 +17,13 @@ function App() {
     <Router>
       {/* <Navbars/> */}
       <Routes>
+        {/* Users */}
         <Route exact path="/" element={<Home/>}/>
-        <Route exact path="/detail" element={<Detail/>}/>
-        <Route exact path="/register" element={<Register/>}/>
-        <Route exact path="/login" element={<Login/>}/>
+        <Route exact path="/detail/:id" element={<Detail/>}/>
         <Route exact path="/payment" element={<Payment/>}/>
         <Route exact path="/profile" element={<Profile/>}/>
-
+        
+        {/* Admin */}
         <Route exact path="/list_transaction" element={<ListTransaction/>}/>
         <Route exact path="/incom_trip" element={<IncomTrip/>}/>
         <Route exact path="/modal_approved" element={<ModalApproved/>}/>
