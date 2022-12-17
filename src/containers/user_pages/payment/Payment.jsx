@@ -1,7 +1,9 @@
 // components
-import Navbar from "../../../components/navbar/Navbar"
-import Footer from "../../../components/footer/Footer"
 import Table from 'react-bootstrap/Table';
+import { useState } from 'react';
+import { useParams } from 'react-router-dom';
+
+
 
 // css
 import './Payment.scss'
@@ -9,11 +11,22 @@ import './Payment.scss'
 // image
 import icon from '../../../assets/img/icon.png' 
 import img_payment from '../../../assets/img/img-payment.png' 
+import Popup from '../../../components/popup/Popup';
 
 const Payment = () => {
+
+    const [popup, setPopup] = useState(false)
+
+    // get id
+    let {id} = useParams()
+    id = parseInt(id)
+
+    // get local storage user
+    let localStoragedata = JSON.parse(localStorage.getItem("user"))
+
     return (
         <>
-            <Navbar/>
+            <Popup popup={popup} setPopup={setPopup}/>
             <div className="payment-container">
                 <div className="content1">
                     <img src={icon} alt="" />
@@ -58,6 +71,9 @@ const Payment = () => {
                         <p>Upload Payment Proof</p>
                     </div>
                 </div>
+
+                {localStoragedata.map(data => (
+                data.id === id &&
                 <Table striped bordered hover className="tables">
                     <thead>
                         <tr>
@@ -72,9 +88,9 @@ const Payment = () => {
                     <tbody>
                         <tr>
                         <td>1</td>
-                        <td>Radid Ganteng</td>
+                        <td>{data.name}</td>
                         <td>Male</td>
-                        <td>083896833112</td>
+                        <td>{data.phone}</td>
                         <td className="fw-bold">Qty</td>
                         <td className="fw-bold">: 1</td>
                         </tr>
@@ -88,13 +104,12 @@ const Payment = () => {
                         </tr>
                     </tbody>
                 </Table>
-            </div>
-                <div className="btn-pay">
-                    <button type="submit">Pay</button>
-                </div>                
-            
-            <Footer/>
-        </>
+                ))}
+        </div>
+        <div className="btn-pay">
+            <button type="submit" onClick={() => setPopup(true)}>Pay</button>
+        </div>    
+        </>           
     )
 }
 

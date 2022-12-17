@@ -1,6 +1,4 @@
 // components
-import Footer from "../../../components/footer/Footer"
-import Navbar from "../../../components/navbar/Navbar"
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
@@ -16,7 +14,6 @@ import attache from '../../../assets/img/attache.png'
 const AddTrip = () => {
     return (
         <>
-            <Navbar/>
             <div className="add-trip-container">
                 <h2 className="add-trip-title">Add Trip</h2>
                 <Form className='form-add-trip'>
@@ -98,7 +95,6 @@ const AddTrip = () => {
                     <Button variant="primary" type="submit" className='button-add-trip'>Add trip</Button>
                 </Form>
             </div>
-            <Footer/>
         </>
     )
 }

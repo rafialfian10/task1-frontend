@@ -1,0 +1,46 @@
+{
+    "posts": [
+        {
+            "id": 1,
+            "title": "6D/4N Fun Tassie Vacation...",
+            "price": 12398000,
+            "country": "Australia",
+            "image": "static/media/view1.895e0185283f2509df36.png"
+          },
+          {
+            "id": 2,
+            "title": "6D/4N Exiting Summer in...",
+            "price": 10288000,
+            "country": "South Korea",
+            "image": "/static/media/view2.08a3d72bfa8aa89dd8b2.png"
+          },
+          {
+            "id": 3,
+            "title": "8D/6N Wonderful Autum...",
+            "price": 28999000,
+            "country": "Japan",
+            "image": "/static/media/view3.bd33a8e8c4c2d301d78c.png"
+          },
+          {
+            "id": 4,
+            "title": "4D/3N Overland Jakarta B...",
+            "price": 3188000,
+            "country": "Indonesia",
+            "image": "/static/media/view4.26a7de0acd530667b0c5.png"
+          },
+          {
+            "id": 5,
+            "title": "4D/3N Labuan Bajo Delight",
+            "price": 10488000,
+            "country": "Indonesia",
+            "image": "/static/media/view5.ad766b363621471aab9c.png"
+          },
+          {
+            "id": 6,
+            "title": "5D/4N Magic Tokyo Fun",
+            "price": 11188000,
+            "country": "Japan",
+            "image": "/static/media/view6.235fe967dd3c60abc8a6.png"
+          }
+    ]
+}

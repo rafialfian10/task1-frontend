@@ -1,27 +1,31 @@
 // components
 import Table from 'react-bootstrap/Table';
-import Modal from 'react-bootstrap/Modal';
+import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 // css
-import './ModalApproved.scss'
+import './PaymentPending.scss'
 
 // image
 import icon from '../../../assets/img/icon.png' 
 import img_payment from '../../../assets/img/img-payment.png' 
+import Popup from '../../../components/popup/Popup';
 
-const ModalApproved = ({modalApproved, setModalApproved}) => {
+const PaymentPending = () => {
 
-  const handleCloseModal = (e) => {
-    e.preventDefault()
-    setModalApproved(false)
-  }  
+    const [popup, setPopup] = useState(false)
 
-  return (
-    <>
-      <Modal show={modalApproved} onHide={() => setModalApproved(false)} dialogClassName="modal-90w" className='modal-approved-container' aria-labelledby="example-custom-modal-styling-title" size="xl">
-        <Modal.Body className='body-approved-container'>
+    // get id
+    let {id} = useParams()
+    id = parseInt(id)
+
+    // get local storage user
+    let localStoragedata = JSON.parse(localStorage.getItem("user"))
+
+    return (
         <>
-            <div className="modal-approved-container">
+            <Popup popup={popup} setPopup={setPopup}/>
+            <div className="payment-container">
                 <div className="content1">
                     <img src={icon} alt="" />
                     <div className="sub-content1">
@@ -34,7 +38,7 @@ const ModalApproved = ({modalApproved, setModalApproved}) => {
                     <div className="info-payment">
                         <h3 className="title">6D/4N Fun Tassie Vacation</h3>
                         <p className="country">Australia</p>
-                        <p className="status-payment">Waiting Payment</p>
+                        <p className="status-payment-pending">Waiting Approve</p>
                     </div>
 
                     <div className="info-tour">
@@ -65,6 +69,9 @@ const ModalApproved = ({modalApproved, setModalApproved}) => {
                         <p>Upload Payment Proof</p>
                     </div>
                 </div>
+
+                {localStoragedata.map(data => (
+                data.id === id &&
                 <Table striped bordered hover className="tables">
                     <thead>
                         <tr>
@@ -79,9 +86,9 @@ const ModalApproved = ({modalApproved, setModalApproved}) => {
                     <tbody>
                         <tr>
                         <td>1</td>
-                        <td>Radid Ganteng</td>
+                        <td>{data.name}</td>
                         <td>Male</td>
-                        <td>083896833112</td>
+                        <td>{data.phone}</td>
                         <td className="fw-bold">Qty</td>
                         <td className="fw-bold">: 1</td>
                         </tr>
@@ -95,16 +102,10 @@ const ModalApproved = ({modalApproved, setModalApproved}) => {
                         </tr>
                     </tbody>
                 </Table>
-            </div>
-            <div className="btn-modal-approved">
-                <button type="submit" className="cancel" onClick={handleCloseModal}>Cancel</button>
-                <button type="submit" className="approve">Approve</button>
-            </div>                
-        </>
-        </Modal.Body>
-      </Modal>
-    </>
-  );
+                ))}
+        </div>  
+        </>           
+    )
 }
 
-export default ModalApproved
+export default PaymentPending

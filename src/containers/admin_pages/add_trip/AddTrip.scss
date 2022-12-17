@@ -6,26 +6,26 @@ h2.add-trip-title {
     margin-bottom: 20px;
 }
 
-.form-input {
-    background-color: rgb(217, 219, 219) !important;
-}
-
 .form-add-trip {
     margin: auto;
     width: 70vw;
 }
 
+.form-add-trip .form-input {
+    background-color: rgb(217, 219, 219) !important;
+}
+
+
 .form-dropdown{
     position: relative;
 }
 
-.dropdown {
+.form-add-trip .dropdown {
     width: 15px !important;
     height: 10px !important;
     position: absolute;
     top: 47px !important;
     right: 13px !important;
-    z-index: 1;
 }
 
 .duration {

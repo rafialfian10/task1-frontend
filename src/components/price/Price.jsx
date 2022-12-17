@@ -9,7 +9,7 @@ import minus from '../../assets/img/minus.png'
 import './Price.scss'
 
 // data dummy
-import dummyData from '../../db.js'
+import dummyData from '../../db.json'
 
 
 const Price = () => {
@@ -33,13 +33,15 @@ const Price = () => {
 
     // Get parameter
     let {id} = useParams()
-
     id = parseInt(id)
+
+    // get data json
+    const datas = dummyData.posts
 
 
     return (
         <>
-            {dummyData.map(data => (
+            {datas.map(data => (
                 data.id === id &&
                 <div className='price-container'>
                 <div className='line1'>
