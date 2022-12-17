@@ -6,20 +6,18 @@ import { useNavigate } from 'react-router-dom';
 import './Card2.scss'
 
 // Database
-// import DummyData from '../../db.json'
-import dummyData from '../../db.jsx'
+import dummyData from '../../db.js'
 
 const Card2 = ()  =>{
 // navigate
 const navigate = useNavigate() 
 
-// get data json
-// const datas = DummyData.posts
+console.log(dummyData)
 
   return (
     <>
         <CardGroup className="cards2">
-        { dummyData.map((data) => (
+        {dummyData.map((data) => (
             <div className="card2">
                 <div className='page'>
                     <p>12/15</p>

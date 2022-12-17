@@ -9,7 +9,7 @@ import detail4 from '../../assets/img/detail4.png'
 import './DetailImage.scss'
 
 // data dummy
-import dummyData from '../../db.jsx'
+import dummyData from '../../db.js'
 
 const DetailImage = () => {
 
@@ -17,12 +17,9 @@ const DetailImage = () => {
     let {id}= useParams()
     id = parseInt(id)
 
-    // get data json
-    const datas = dummyData.posts
-
     return (
         <>
-        {datas.map(data => (
+        {dummyData.map(data => (
             data.id === id && 
             <div>
                 <h1 className='title-detail'>{data.title}</h1>

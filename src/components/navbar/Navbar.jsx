@@ -23,9 +23,12 @@ import Modal from "react-bootstrap/Modal";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Dropdown from "react-bootstrap/Dropdown";
 import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Navbars = () => {
+  // navidate berfungsi untuk redirect kehalaman lain
+  const navigate = useNavigate();
+
   // Login modal login
   const [showReg, setShowReg] = useState(false);
 
@@ -49,10 +52,7 @@ const Navbars = () => {
   };
   //-------------------------------------------------------------
 
-  // navidate berfungsi untuk redirect kehalaman lain
-  const navigate = useNavigate();
-
-  // Process input data to localstorage
+  // Process register
   // usestate berfungsi untuk menyimpan data input
   const [dataReg, setDataReg] = useState({
     id: "",
@@ -74,13 +74,14 @@ const Navbars = () => {
 
     let result = [];
 
-    // panggil local storage dengan getItem lalu
+    // panggil local storage dengan getItem
     const localStorageData = localStorage.getItem("user");
     // lakukan kondisi jika local storage ada isinya maka parsing data ke json lalu tampung ke result
     if (localStorageData != null) {
       result = JSON.parse(localStorageData);
     }
 
+    // create id unique lalu tampung ke variabel dataUser
     let dataUser = { ...dataReg };
     dataUser.id = new Date().getMilliseconds();
 
@@ -93,6 +94,7 @@ const Navbars = () => {
     setShowLog(true);
   };
   // end function register submit
+  //---------------------------------------------------------------------
 
   // process login
   const [login, setLogin] = useState({
@@ -120,17 +122,19 @@ const Navbars = () => {
     }
 
     // cek apakah email dan password yang diinputkan sudah sesuai dengan email dan password di local storage
-    const checkEmailAndPassword = result.filter(
-      (data) => { return data.email === login.email && data.password === login.password}
-    )[0];
+    const checkEmailAndPassword = result.filter((data) => {
+      return data.email === login.email && data.password === login.password;
+    })[0];
+
     console.log(checkEmailAndPassword)
 
     // jika checkEmailAndPassword true
     if (checkEmailAndPassword) {
-      // set item local strorage key isLogin = true
+      // set item local strorage key isLogin = true dan userLogin = id yang telah dimasukkan kedalam checkEmailAndPassword
       localStorage.setItem("isLogin", true);
-      checkEmailAndPassword.role === "admin" && localStorage.setItem("isAdmin", true)
-      // navigate("/");
+      localStorage.setItem("userLogin", checkEmailAndPassword.id);
+      checkEmailAndPassword.role === "admin" && localStorage.setItem("isAdmin", true);
+      navigate("/");
       alert("Login successfully");
       setShowLog(false);
     } else {
@@ -143,16 +147,16 @@ const Navbars = () => {
   const HandleLogout = (e) => {
     e.preventDefault();
 
+    // hapus key di local storage
     localStorage.removeItem("isLogin");
-    localStorage.removeItem("isAdmin")
+    localStorage.removeItem("isAdmin");
     navigate("/");
     alert("Logout successfully");
   };
   // end process logout
 
+  //get local storage
   const localStorageData = JSON.parse(localStorage.getItem("user"));
-  let { id } = useParams();
-  id = parseInt(id);
 
   return (
     <>
@@ -165,46 +169,57 @@ const Navbars = () => {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto sub-navbar">
               {/* profile navbar */}
+              {/* jika isLogin = true maka tampilkan dropdown navbar, jika false tampilkan btn login & register*/}
               {localStorage.getItem("isLogin") ? (
-              <>
-              {!localStorage.getItem("isAdmin") ?
-                
-                <Navbar.Brand>
-                  <img src={photoProfile} alt="" className="photo-profile" />
-                  {localStorageData.map((data) =>
-                  // data.id === id &&
+                <>
+                  {/* jika isAdmin = false maka tampilkan dropdown user, jika true maka tampilkan dropdown admin*/}
+                  {!localStorage.getItem("isAdmin") ? (
+                    <Navbar.Brand>
+                      <img src={photoProfile} alt="" className="photo-profile"/>
+                      {/* looping local storage lalu kondisikan jika id localstorage == id userLogin(ls) maka...*/}
+                      {localStorageData.map((data) => {
+                        if (parseInt(localStorage.getItem("userLogin")) === data.id){
+                          return (
+                            <Dropdown as={ButtonGroup} className="dropdown"> <Dropdown.Toggle split variant="success" id="dropdown-split-basic" className="toggle-navbar"/>
+                              <Dropdown.Menu className="menu-dropdown">
+                                <Dropdown.Item onClick={() => navigate(`/profile/${data.id}`)}>
+                                  <img src={profile} alt=""/>
+                                </Dropdown.Item>
+                                <Dropdown.Item onClick={() => navigate(`/payment/${data.id}`)}>
+                                  <img src={bill} alt=""/>
+                                </Dropdown.Item>
+                                <Dropdown.Item onClick={HandleLogout}>
+                                  <img src={logout} alt=""/>
+                                </Dropdown.Item>
+                              </Dropdown.Menu>
+                            </Dropdown>
+                          );
+                        }
+                      })}
+                    </Navbar.Brand>
+                  ) : (
+                    <Navbar.Brand>
+                      <img src={photoProfile} alt="" className="photo-profile"/>
                       <Dropdown as={ButtonGroup} className="dropdown">
                         <Dropdown.Toggle split variant="success" id="dropdown-split-basic" className="toggle-navbar"/>
-                          <Dropdown.Menu className="menu-dropdown">
-                            <Dropdown.Item onClick={() => navigate(`/profile/${data.id}`)}><img src={profile} alt=""/></Dropdown.Item>
-                            <Dropdown.Item onClick={() => navigate(`/payment/${data.id}`)}><img src={bill} alt="" /></Dropdown.Item>
-                            <Dropdown.Item onClick={HandleLogout}><img src={logout} alt="" /></Dropdown.Item>
-                          </Dropdown.Menu>
-                        </Dropdown>
-                  )}
-                </Navbar.Brand>
-                
-              : <Navbar.Brand>
-                <img src={photoProfile} alt="" className="photo-profile" />
-                {/* {localStorageData.map((data) => */}
-                {/* // data.id === id && */}
-                    <Dropdown as={ButtonGroup} className="dropdown">
-                      <Dropdown.Toggle split variant="success" id="dropdown-split-basic" className="toggle-navbar"/>
                         <Dropdown.Menu className="menu-dropdown">
-                          <Dropdown.Item onClick={() => navigate(`/incom_trip`)}><img src={trip} alt=""/></Dropdown.Item>
-                          <Dropdown.Item onClick={HandleLogout}><img src={logout} alt="" /></Dropdown.Item>
+                          <Dropdown.Item onClick={() => navigate(`/incom_trip`)}>
+                            <img src={trip} alt=""/>
+                          </Dropdown.Item>
+                          <Dropdown.Item onClick={HandleLogout}>
+                            <img src={logout} alt=""/>
+                          </Dropdown.Item>
                         </Dropdown.Menu>
                       </Dropdown>
-                {/* )} */}
-                </Navbar.Brand>
-              }
-              </>
+                    </Navbar.Brand>
                 // end profile navbar
+                  )}
+                </>
               ) : (
                 <>
                   {/* modal register */}
-                  <Nav.Link className="register" onClick={handleShowReg}>Register</Nav.Link>
-                  <Modal show={showReg} onHide={handleCloseReg} className="modal-register"size="lg">
+                  <Nav.Link className="register" onClick={handleShowReg}> Register</Nav.Link>
+                  <Modal show={showReg} onHide={handleCloseReg} className="modal-register" size="lg">
                     <Modal.Body className="modal-body-register">
                       <h1 className="title-register">Register</h1>
                       <img src={leaf2} alt="" className="leaf2" />
@@ -230,9 +245,7 @@ const Navbars = () => {
                           <Form.Label>Address</Form.Label>
                           <Form.Control type="text" name="address" onChange={HandleChangeRegister}/>
                         </Form.Group>
-                        <Button variant="primary" type="submit" className="button-submit" onClick={HandleRegisterSubmit}>
-                          Submit
-                        </Button>
+                        <Button variant="primary" type="submit" className="button-submit" onClick={HandleRegisterSubmit}> Submit</Button>
                       </Form>
                     </Modal.Body>
                   </Modal>
@@ -252,9 +265,9 @@ const Navbars = () => {
                         </Form.Group>
                         <Form.Group className="form-group" controlId="formBasicPassword">
                           <Form.Label>Password</Form.Label>
-                          <Form.Control type="password" name="password" onChange={HandleChangeLogin} />
+                          <Form.Control type="password" name="password" onChange={HandleChangeLogin}/>
                         </Form.Group>
-                        <Button variant="primary" type="submit" className="button-submit" onClick={HandleLoginSubmit}>Submit</Button>
+                        <Button variant="primary" type="submit" className="button-submit"onClick={HandleLoginSubmit}>Submit</Button>
                         <p>Don't have an account?<button className="btn-show-register" onClick={handleRegister}>Click here</button></p>
                       </Form>
                     </Modal.Body>

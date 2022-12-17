@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Navigate, useNavigate, useParams } from 'react-router-dom'
 
 // image
 import plus from '../../assets/img/plus.png'
@@ -9,10 +9,12 @@ import minus from '../../assets/img/minus.png'
 import './Price.scss'
 
 // data dummy
-import dummyData from '../../db.json'
+import dummyData from '../../db.js'
 
 
 const Price = () => {
+
+    const navigate = useNavigate()
 
     // panggil usestate dengan set data = 0
     const [number, setNumber] = useState(0)
@@ -35,13 +37,9 @@ const Price = () => {
     let {id} = useParams()
     id = parseInt(id)
 
-    // get data json
-    const datas = dummyData.posts
-
-
     return (
         <>
-            {datas.map(data => (
+            {dummyData.map(data => (
                 data.id === id &&
                 <div className='price-container'>
                 <div className='line1'>
@@ -67,7 +65,7 @@ const Price = () => {
                     <hr />
                         
                     <div className='btn-submit'>
-                        <button type='submit'>BOOK NOW</button>
+                        <button type='submit' onClick={() => navigate('/payment')}>BOOK NOW</button>
                     </div>                           
                 </div>
             ))}
