@@ -54,7 +54,7 @@ const Price = () => {
                     </div>
                     <div className='sub-line2'>
                         <button  onClick={HandlerMinus} className='minus'><img src={minus} alt=""/></button>
-                        <h5 className='value'>{number}</h5>
+                        <h5 className='value'>{qty = number}</h5>
                         <button onClick={HandlerPlus}><img src={plus} alt=""/></button>                            </div>
                     </div>                       
                     <hr />

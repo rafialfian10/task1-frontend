@@ -14,7 +14,6 @@ function Admin() {
   const [modalApproved, setModalApproved] = useState(false)
 
   return (
-    
     <>
     {/* kirim props ke component ModalApproved */}
     <ModalApproved modalApproved={modalApproved} setModalApproved={setModalApproved}/>

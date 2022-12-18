@@ -15,12 +15,8 @@ import Profile from "./containers/user_pages/profile/Profile";
 import ModalApproved from "./containers/admin_pages/modal_approved/ModalApproved";
 import AddTrip from "./containers/admin_pages/add_trip/AddTrip";
 import PaymentPending from "./containers/user_pages/payment_pending/PaymentPending";
-import { useState } from "react";
 
 function App() {
-
-  // create useState dan kirim ke halaman detail
-  const [price, setPrice] = useState(0)
 
   return (
     <Router>
@@ -28,7 +24,7 @@ function App() {
       <Routes>
             {/* public */}
             <Route exact path="/" element={<Home/>}/>
-            <Route exact path="/detail/:id" element={<Detail price={price} setPrice={setPrice} />}/>
+            <Route exact path="/detail/:id" element={<Detail/>}/>
 
             {/* admin */}
               <Route element={<PrivateRouteAdmin/>}>

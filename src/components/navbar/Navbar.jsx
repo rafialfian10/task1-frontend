@@ -131,8 +131,11 @@ const Navbars = ({admin}) => {
       // set item local strorage key isLogin = true dan userLogin = id yang telah dimasukkan kedalam checkEmailAndPassword
       localStorage.setItem("isLogin", true);
       localStorage.setItem("userLogin", checkEmailAndPassword.id);
+
+      // jika data di checkEmailAndPassword valuenya == admin maka set item local storage "isAdmin"
       checkEmailAndPassword.role === "admin" && localStorage.setItem("isAdmin", true);
-      navigate("/");
+      
+      window.location.href = "/"
       alert("Login successfully");
       setShowLog(false);
     } else {

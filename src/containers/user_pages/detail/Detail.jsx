@@ -3,13 +3,13 @@ import Description from '../../../components/description/Description'
 import DetailImage from '../../../components/detailImage/DetailImage'
 import Price from '../../../components/price/Price'
 
-const Detail = ({price, setPrice}) => {
+const Detail = () => {
 
     return (
         <>
             <DetailImage/>
             <Description/>
-            <Price price={price} setPrice={setPrice}/>
+            <Price/>
         </>
     )
 }
