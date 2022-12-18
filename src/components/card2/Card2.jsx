@@ -18,7 +18,6 @@ const navigate = useNavigate()
   return (
     <>  
     <img src={palm} alt="" className='palm' />
-        <h1 className='card2-title'>Group Tour</h1>
         <CardGroup className="cards2">
         {dummyData.map((data) => (
             <div className="card2">

@@ -15,22 +15,20 @@ import Profile from "./containers/user_pages/profile/Profile";
 import ModalApproved from "./containers/admin_pages/modal_approved/ModalApproved";
 import AddTrip from "./containers/admin_pages/add_trip/AddTrip";
 import PaymentPending from "./containers/user_pages/payment_pending/PaymentPending";
-
-// account admin 
-let admin = {
-  email: "admin@gmail.com",
-  password: "admin123"
-}
+import { useState } from "react";
 
 function App() {
+
+  // create useState dan kirim ke halaman detail
+  const [price, setPrice] = useState(0)
 
   return (
     <Router>
       <Navbar/>
       <Routes>
             {/* public */}
-            <Route exact path="/" element={<Home/>} admin={admin}/>
-            <Route exact path="/detail/:id" element={<Detail/>}/>
+            <Route exact path="/" element={<Home/>}/>
+            <Route exact path="/detail/:id" element={<Detail price={price} setPrice={setPrice} />}/>
 
             {/* admin */}
               <Route element={<PrivateRouteAdmin/>}>
@@ -42,7 +40,7 @@ function App() {
 
             {/* user */}
             <Route element={<PrivateRouteUser/>} >
-              <Route exact path="/payment/:id" element={<Payment/>}/>
+              <Route exact path="/payment/:id" element={<Payment/>} />
               <Route exact path="/payment_pending" element={<PaymentPending/>}/>
               <Route exact path="/profile/:id" element={<Profile/>}/>
             </Route>

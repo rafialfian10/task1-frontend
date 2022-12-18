@@ -3,6 +3,9 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import Table from "react-bootstrap/Table";
 import Popup from "../../../components/popup/Popup";
+import {harga, qty} from '../../../components/price/Price'
+import {title, country} from '../../../components/detailImage/DetailImage'
+
 
 // css
 import "./Payment.scss";
@@ -16,7 +19,7 @@ const Payment = () => {
 
   // get id
   let { id } = useParams();
-  id = parseInt(id);
+  id = parseInt(id); 
 
   // get local storage user
   let localStoragedata = JSON.parse(localStorage.getItem("user"));
@@ -35,8 +38,8 @@ const Payment = () => {
 
         <div className="content2">
           <div className="info-payment">
-            <h3 className="title">6D/4N Fun Tassie Vacation</h3>
-            <p className="country">Australia</p>
+            <h3 className="title">{title}</h3>
+            <p className="country">{country}</p>
             <p className="status-payment">Waiting Payment</p>
           </div>
 
@@ -90,7 +93,7 @@ const Payment = () => {
                     <td>Male</td>
                     <td>{data.phone}</td>
                     <td className="fw-bold">Qty</td>
-                    <td className="fw-bold">: 1</td>
+                    <td className="fw-bold">: {qty}</td>
                   </tr>
                   <tr>
                     <td></td>
@@ -98,7 +101,7 @@ const Payment = () => {
                     <td></td>
                     <td></td>
                     <td className="fw-bold">Total</td>
-                    <td className="fw-bold text-danger">: IDR. 12,398,000</td>
+                    <td className="fw-bold text-danger">: IDR. {harga}</td>
                   </tr>
                 </tbody>
               </Table>

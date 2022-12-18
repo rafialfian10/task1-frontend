@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Navigate, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 // image
 import plus from '../../assets/img/plus.png'
@@ -10,6 +10,9 @@ import './Price.scss'
 
 // data dummy
 import dummyData from '../../db.js'
+
+export let qty = 0
+export let harga = 0
 
 
 const Price = () => {
@@ -61,7 +64,7 @@ const Price = () => {
                             <h5 className='total'>Total :</h5>
                         </div>
                         <div className='sub-line2'>
-                            <h5 className='price'>IDR. {(data.price * number)}</h5>
+                            <h5 className='price'>IDR. {harga = (data.price * number)}</h5>
                         </div>
                     </div>
                     <hr />

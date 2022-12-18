@@ -26,6 +26,7 @@ const Home = () => {
     <>
       <Jumbotron />
       <Card1 />
+      <h1>Group Tour</h1>
       <Card2 />
     </>
   );

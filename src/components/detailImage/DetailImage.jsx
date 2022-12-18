@@ -13,6 +13,10 @@ import './DetailImage.scss'
 // data dummy
 import dummyData from '../../db.js'
 
+// export data 
+export let title = ""
+export let country = ""
+
 const DetailImage = () => {
 
     // Get parameter
@@ -24,8 +28,8 @@ const DetailImage = () => {
         {dummyData.map(data => (
             data.id === id && 
             <div className='detail-img-container'>
-                <h1 className='title-detail'>{data.title}</h1>
-                <p className='title-country'>{data.country}</p>
+                <h1 className='title-detail'>{title = data.title}</h1>
+                <p className='title-country'>{country = data.country}</p>
                 <div className="thumbnail">
                     <img src={data.image} className="img-thumbnail" alt=""/>
                     <img src={hibiscus} alt="" className='detail-hibiscus' />
