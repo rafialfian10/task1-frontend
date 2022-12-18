@@ -4,12 +4,16 @@
     box-sizing: border-box;
 }
 
+.detail-img-container {
+    position: relative;
+}
+
 .title-detail {
     text-align: left;
     padding-left: 200px;
     font-weight: bold;
     margin: 0px;
-    margin-top: 150px !important;
+    margin-top: 100px !important;
 }
 
 
@@ -39,4 +43,15 @@
     width: 100%;
     margin-bottom: 10px;
     border: none;
+}
+
+.detail-hibiscus {
+    position: absolute;
+    right: 0px;
+}
+
+.detail-palm {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
 }

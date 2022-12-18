@@ -1,9 +1,11 @@
 // components
-import Popup from "./components/popup/Popup";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { PrivateRouteAdmin, PrivateRouteUser } from "./components/private_route/PrivateRoute";
+import {PageNotFound} from "./components/private_route/PrivateRoute";
+import Navbar from "./components/navbar/Navbar";
+import Footer from "./components/footer/Footer";
 
 // Pages
-// import Navbars from "./components/navbar/Navbar";
 import Home from "./Home/Home";
 import Detail from "./containers/user_pages/detail/Detail";
 import Payment from "./containers/user_pages/payment/Payment";
@@ -12,29 +14,40 @@ import ListTransaction from "./containers/admin_pages/list_transaction/ListTrans
 import Profile from "./containers/user_pages/profile/Profile";
 import ModalApproved from "./containers/admin_pages/modal_approved/ModalApproved";
 import AddTrip from "./containers/admin_pages/add_trip/AddTrip";
-import Navbar from "./components/navbar/Navbar";
-import Footer from "./components/footer/Footer";
 import PaymentPending from "./containers/user_pages/payment_pending/PaymentPending";
 
+// account admin 
+let admin = {
+  email: "admin@gmail.com",
+  password: "admin123"
+}
+
 function App() {
+
   return (
     <Router>
       <Navbar/>
       <Routes>
-        {/* Users */}
-        <Route exact path="/" element={<Home/>}/>
-        <Route exact path="/detail/:id" element={<Detail/>}/>
-        <Route exact path="/payment/:id" element={<Payment/>}/>
-        <Route exact path="/profile/:id" element={<Profile/>}/>
-        <Route exact path="/payment_pending" element={<PaymentPending/>}/>
-        <Route exact path="/popup" element={<Popup/>}/>
+            {/* public */}
+            <Route exact path="/" element={<Home/>} admin={admin}/>
+            <Route exact path="/detail/:id" element={<Detail/>}/>
 
-        {/* Admin */}
-        <Route exact path="/list_transaction" element={<ListTransaction/>}/>
-        <Route exact path="/incom_trip" element={<IncomTrip/>}/>
-        <Route exact path="/modal_approved" element={<ModalApproved/>}/>
-        <Route exact path="/add_trip" element={<AddTrip/>}/>
+            {/* admin */}
+              <Route element={<PrivateRouteAdmin/>}>
+                <Route exact path="/list_transaction" element={<ListTransaction/>}/>
+                <Route exact path="/incom_trip" element={<IncomTrip/>}/>
+                <Route exact path="/modal_approved" element={<ModalApproved/>}/>
+                <Route exact path="/add_trip" element={<AddTrip/>}/>
+              </Route>
 
+            {/* user */}
+            <Route element={<PrivateRouteUser/>} >
+              <Route exact path="/payment/:id" element={<Payment/>}/>
+              <Route exact path="/payment_pending" element={<PaymentPending/>}/>
+              <Route exact path="/profile/:id" element={<Profile/>}/>
+            </Route>
+            
+            <Route exact path="/:pageName" element={<PageNotFound/>} />
       </Routes>
       <Footer/>
     </Router>

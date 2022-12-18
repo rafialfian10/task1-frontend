@@ -5,6 +5,9 @@ import { useNavigate } from 'react-router-dom';
 // css
 import './Card2.scss'
 
+// image
+import palm from '../../assets/img/palm.png' 
+
 // Database
 import dummyData from '../../db.js'
 
@@ -12,10 +15,10 @@ const Card2 = ()  =>{
 // navigate
 const navigate = useNavigate() 
 
-console.log(dummyData)
-
   return (
-    <>
+    <>  
+    <img src={palm} alt="" className='palm' />
+        <h1 className='card2-title'>Group Tour</h1>
         <CardGroup className="cards2">
         {dummyData.map((data) => (
             <div className="card2">

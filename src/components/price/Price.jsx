@@ -37,6 +37,8 @@ const Price = () => {
     let {id} = useParams()
     id = parseInt(id)
 
+    let userLogin = localStorage.getItem("userLogin")
+
     return (
         <>
             {dummyData.map(data => (
@@ -65,7 +67,7 @@ const Price = () => {
                     <hr />
                         
                     <div className='btn-submit'>
-                        <button type='submit' onClick={() => navigate('/payment')}>BOOK NOW</button>
+                        <button type='submit' onClick={() => navigate(`/payment/${userLogin}`)}>BOOK NOW</button>
                     </div>                           
                 </div>
             ))}

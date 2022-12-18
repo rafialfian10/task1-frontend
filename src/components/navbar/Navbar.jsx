@@ -25,7 +25,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Navbars = () => {
+const Navbars = ({admin}) => {
   // navidate berfungsi untuk redirect kehalaman lain
   const navigate = useNavigate();
 
@@ -126,8 +126,6 @@ const Navbars = () => {
       return data.email === login.email && data.password === login.password;
     })[0];
 
-    console.log(checkEmailAndPassword)
-
     // jika checkEmailAndPassword true
     if (checkEmailAndPassword) {
       // set item local strorage key isLogin = true dan userLogin = id yang telah dimasukkan kedalam checkEmailAndPassword
@@ -150,6 +148,7 @@ const Navbars = () => {
     // hapus key di local storage
     localStorage.removeItem("isLogin");
     localStorage.removeItem("isAdmin");
+    localStorage.removeItem("userLogin");
     navigate("/");
     alert("Logout successfully");
   };
@@ -176,8 +175,9 @@ const Navbars = () => {
                   {!localStorage.getItem("isAdmin") ? (
                     <Navbar.Brand>
                       <img src={photoProfile} alt="" className="photo-profile"/>
-                      {/* looping local storage lalu kondisikan jika id localstorage == id userLogin(ls) maka...*/}
+                      {/* looping local storage lalu kondisikan*/}
                       {localStorageData.map((data) => {
+                        // jika id.userLogin == id.user tampilkan dropdown 
                         if (parseInt(localStorage.getItem("userLogin")) === data.id){
                           return (
                             <Dropdown as={ButtonGroup} className="dropdown"> <Dropdown.Toggle split variant="success" id="dropdown-split-basic" className="toggle-navbar"/>
@@ -252,7 +252,7 @@ const Navbars = () => {
                   {/* end modal register */}
 
                   {/* modal login */}
-                  <Nav.Link className="login" onClick={handleShowLog}>Login</Nav.Link>
+                  <Nav.Link className="login" onClick={handleShowLog}  >Login</Nav.Link>
                   <Modal show={showLog} onHide={handleCloseLog} className="modal-login" size="lg">
                     <Modal.Body className="form-login">
                       <h1 className="title-login">Login</h1>
