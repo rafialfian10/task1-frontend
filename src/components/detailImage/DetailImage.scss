@@ -31,18 +31,20 @@
     margin-bottom: 50px;   
 }
 
+.img-thumbnail {
+    width: 100%;
+    height: 500px;
+    margin-bottom: 10px;
+    border: none;
+}
+
 .thumb {
     width: 70vw;
+    height: 200px;
     margin: auto;
     display: flex;
     justify-content: space-between;
     gap: 3px !important;
-}
-
-.img-thumbnail {
-    width: 100%;
-    margin-bottom: 10px;
-    border: none;
 }
 
 .detail-hibiscus {

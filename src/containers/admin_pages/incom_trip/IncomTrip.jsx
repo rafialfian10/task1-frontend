@@ -11,7 +11,10 @@ const IncomTrip = () => {
         <>
             <div className="title">
                 <h4>Income Trip</h4>
-                <button onClick={() => navigate('/add_trip')}>Add Trip</button>
+                <div className="button-add">
+                    <button onClick={() => navigate('/add_country')}>Add Country</button>
+                    <button onClick={() => navigate('/add_trip')}>Add Trip</button>
+                </div>
             </div>
             <Card2/>
         </>

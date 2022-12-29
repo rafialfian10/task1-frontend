@@ -9,6 +9,7 @@ import four from '../../assets/img/4.png'
 
 const Card1 = ()  =>{
   return (
+    <>
     <CardGroup className="cards">
     <Card className="card">
         <Card.Img variant="top" src={one}/>
@@ -41,7 +42,9 @@ const Card1 = ()  =>{
         <Card.Text className="info">A small river named Duren flows by their place and supplies.</Card.Text>
         </Card.Body>
     </Card>
-</CardGroup>
+    </CardGroup>
+    <h1>Group Tour</h1>
+    </>
   );
 }
 

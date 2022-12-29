@@ -3,9 +3,8 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import Table from "react-bootstrap/Table";
 import Popup from "../../../components/popup/Popup";
-import {harga, qty} from '../../../components/price/Price'
+import {price, qty} from '../../../components/price/Price'
 import {title, country} from '../../../components/detailImage/DetailImage'
-
 
 // css
 import "./Payment.scss";
@@ -13,6 +12,12 @@ import "./Payment.scss";
 // image
 import icon from "../../../assets/img/icon.png";
 import img_payment from "../../../assets/img/img-payment.png";
+
+// export ke (Profile) agar dapat dimanfaatkan untuk menampung data
+export let title2 = ""
+export let country2 =  ""
+export let price2 = 0
+export let qty2 = 0
 
 const Payment = () => {
   const [popup, setPopup] = useState(false);
@@ -38,8 +43,8 @@ const Payment = () => {
 
         <div className="content2">
           <div className="info-payment">
-            <h3 className="title">{title}</h3>
-            <p className="country">{country}</p>
+            <h3 className="title">{title2 = title}</h3>
+            <p className="country">{country2 = country}</p>
             <p className="status-payment">Waiting Payment</p>
           </div>
 
@@ -72,10 +77,9 @@ const Payment = () => {
           </div>
         </div>
 
-        {localStoragedata.map(
-          (data) =>
+        {localStoragedata.map((data,i ) =>
             data.id === id && (
-              <Table striped bordered hover className="tables">
+              <Table striped bordered hover className="tables" key={i}>
                 <thead>
                   <tr>
                     <th>No</th>
@@ -93,7 +97,7 @@ const Payment = () => {
                     <td>Male</td>
                     <td>{data.phone}</td>
                     <td className="fw-bold">Qty</td>
-                    <td className="fw-bold">: {qty}</td>
+                    <td className="fw-bold">: {qty2 = qty}</td>
                   </tr>
                   <tr>
                     <td></td>
@@ -101,7 +105,7 @@ const Payment = () => {
                     <td></td>
                     <td></td>
                     <td className="fw-bold">Total</td>
-                    <td className="fw-bold text-danger">: IDR. {harga}</td>
+                    <td className="fw-bold text-danger">: IDR. {price2 = price}</td>
                   </tr>
                 </tbody>
               </Table>

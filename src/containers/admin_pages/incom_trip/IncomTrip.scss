@@ -19,12 +19,19 @@
     font-weight: bold;
 }
 
+.button-add {
+    width: 70%;
+    display: flex;
+    justify-content: flex-end;
+}
+
 .title button {
-    width: 100px;
+    width: 120px;
     height: 40px;
     border-radius: 5px;
     border: none;
     background-color: orange;
     color: white;
     font-weight: bold;
+    margin-left: 20px;
 }

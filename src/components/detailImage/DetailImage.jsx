@@ -1,4 +1,5 @@
 import { useParams } from 'react-router-dom'
+import { useQuery } from 'react-query'
 
 // image
 import detail2 from '../../assets/img/detail2.png'
@@ -10,10 +11,10 @@ import palm from '../../assets/img/palm.png'
 // css
 import './DetailImage.scss'
 
-// data dummy
-import dummyData from '../../db.js'
+// api
+import { API } from '../../config/api.js'
 
-// export data 
+// // export data 
 export let title = ""
 export let country = ""
 
@@ -23,15 +24,19 @@ const DetailImage = () => {
     let {id}= useParams()
     id = parseInt(id)
 
+    let { data: detailTrip} = useQuery('tripsCache', async () => {
+        const response = await API.get(`/trip/${id}`);
+        // console.log(response)
+        return response.data.data;
+    });
+
     return (
         <>
-        {dummyData.map(data => (
-            data.id === id && 
             <div className='detail-img-container'>
-                <h1 className='title-detail'>{title = data.title}</h1>
-                <p className='title-country'>{country = data.country}</p>
+                <h1 className='title-detail'>{detailTrip?.title}</h1>
+                <p className='title-country'>{detailTrip?.country.name}</p>
                 <div className="thumbnail">
-                    <img src={data.image} className="img-thumbnail" alt=""/>
+                    <img src={detailTrip?.image} className="img-thumbnail" alt=""/>
                     <img src={hibiscus} alt="" className='detail-hibiscus' />
                     <img src={palm} alt="" className='detail-palm' />
                     <div className="img-thumbnail thumb">
@@ -41,7 +46,6 @@ const DetailImage = () => {
                     </div>
                 </div>
             </div>
-        ))}
         </>
     )
 }

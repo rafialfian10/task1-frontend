@@ -13,6 +13,8 @@ function Admin() {
   // create useState dengan nilai awal false
   const [modalApproved, setModalApproved] = useState(false)
 
+  // let navigate = useNavigate()
+
   return (
     <>
     {/* kirim props ke component ModalApproved */}

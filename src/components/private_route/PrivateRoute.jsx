@@ -3,7 +3,7 @@ import './PrivateRoute.scss'
 
 export const PrivateRouteAdmin = () => {
     //  jika isAdmin di local storage == true maka navigate ke list transaction
-    return <>{!JSON.parse(localStorage.getItem("isAdmin")) ? <Navigate to="/list_transaction"/> : <Outlet/>} </>
+    return <>{!JSON.parse(localStorage.getItem("isAdmin")) ? <Navigate to="/"/> : <Outlet/>} </>
 }
 //------------------------------------
 

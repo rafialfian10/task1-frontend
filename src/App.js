@@ -15,6 +15,7 @@ import Profile from "./containers/user_pages/profile/Profile";
 import ModalApproved from "./containers/admin_pages/modal_approved/ModalApproved";
 import AddTrip from "./containers/admin_pages/add_trip/AddTrip";
 import PaymentPending from "./containers/user_pages/payment_pending/PaymentPending";
+import AddCountry from "./containers/admin_pages/add_country/AddCountry";
 
 function App() {
 
@@ -32,6 +33,7 @@ function App() {
                 <Route exact path="/incom_trip" element={<IncomTrip/>}/>
                 <Route exact path="/modal_approved" element={<ModalApproved/>}/>
                 <Route exact path="/add_trip" element={<AddTrip/>}/>
+                <Route exact path="/add_country" element={<AddCountry/>}/> 
               </Route>
 
             {/* user */}

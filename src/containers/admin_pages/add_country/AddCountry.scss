@@ -1,16 +1,16 @@
-h2.add-trip-title {
+h2.add-country-title {
     font-weight: bold;
     text-align: center;
     margin-top: 100px;
     margin-bottom: 20px;
 }
 
-.form-add-trip {
+.form-add-country {
     margin: auto;
     width: 70vw;
 }
 
-.form-add-trip .form-input {
+.form-add-country .form-input {
     background-color: rgb(217, 219, 219) !important;
 }
 
@@ -43,9 +43,10 @@ h2.add-trip-title {
     margin-right: 50px !important;
 }
 
-.button-add-trip {
+.button-add-country {
     display: flex;
     padding: 10px 20px;
+    box-sizing: border-box;
     justify-content: center;
     margin: auto !important;
     margin-top:50px !important;

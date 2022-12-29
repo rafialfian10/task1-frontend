@@ -1,3 +1,9 @@
+import { useParams } from 'react-router-dom' 
+import { useQuery } from 'react-query'
+
+// api
+import { API } from '../../config/api'
+
 // css
 import './Description.scss'
 
@@ -9,6 +15,17 @@ import duration from '../../assets/img/duration.png'
 import date from '../../assets/img/date.png'
 
 const Description = () => {
+
+     // Get parameter
+     let {id}= useParams()
+     id = parseInt(id)
+ 
+     let { data: detailTrips} = useQuery('tripsCache', async () => {
+        const response = await API.get(`/trip/${id}`);
+        // console.log(response)
+        return response.data.data;
+     });
+ 
     return (
         <>
             <div className="desc-container">
@@ -18,7 +35,7 @@ const Description = () => {
                         <p>Accomodation</p>
                         <div>
                             <img src={hotel} alt=""/>
-                            <h6>Hotel 4 Nights</h6>
+                            <h6>{detailTrips?.accomodation}</h6>
                         </div>
                     </div>
 
@@ -26,7 +43,7 @@ const Description = () => {
                         <p>Transportation</p>
                         <div>
                             <img src={transportation} alt=""/>
-                            <h6>Qatar Airways</h6>
+                            <h6>{detailTrips?.transportation}</h6>
                         </div>
                     </div>
 
@@ -34,7 +51,7 @@ const Description = () => {
                         <p>Eat</p>
                         <div>
                             <img src={eat} alt=""/>
-                            <h6>Included Itinerary</h6>
+                            <h6>{detailTrips?.eat}</h6>
                         </div>
                     </div>
 
@@ -42,7 +59,7 @@ const Description = () => {
                         <p>Duration</p>
                         <div>
                             <img src={duration} alt=""/>
-                            <h6>6 Days 4 Nights</h6>
+                            <h6>{detailTrips?.day} Day {detailTrips?.night} Night</h6>
                         </div>
                     </div>
 
@@ -50,7 +67,7 @@ const Description = () => {
                         <p>Date Trip</p>
                         <div>
                             <img src={date} alt=""/>
-                            <h6>26 August 2020</h6>
+                            <h6>{detailTrips?.datetrip}</h6>
                         </div>
                     </div>
                 </div>

@@ -24,9 +24,15 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Dropdown from "react-bootstrap/Dropdown";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useMutation } from "react-query";
+import { useContext } from "react";
+import { UserContext } from "../../context/userContext";
 
-const Navbars = ({admin}) => {
-  // navidate berfungsi untuk redirect kehalaman lain
+// api
+import { API } from "../../config/api";
+
+const Navbars = () => {
+  // navigate berfungsi untuk redirect kehalaman lain
   const navigate = useNavigate();
 
   // Login modal login
@@ -50,110 +56,125 @@ const Navbars = ({admin}) => {
     setShowLog(false);
     setShowReg(true);
   };
+  // end function handle register
   //-------------------------------------------------------------
 
   // Process register
-  // usestate berfungsi untuk menyimpan data input
-  const [dataReg, setDataReg] = useState({
-    id: "",
+  // const [message, setMessage] = useState(null);
+  const [formReg, setFormReg] = useState({
     name: "",
     email: "",
     password: "",
+    gender: "male",
     phone: "",
     address: "",
-    role: "user",
   });
 
-  // function register submit
   const HandleChangeRegister = (event) => {
-    setDataReg({ ...dataReg, [event.target.name]: event.target.value });
+    setFormReg({ ...formReg, [event.target.name]: event.target.value });
   };
 
-  const HandleRegisterSubmit = (e) => {
-    e.preventDefault();
+  // function register submit
+  const HandleRegisterSubmit = useMutation(async (e) => {
+    try {
+      e.preventDefault();
+      // konfigurasi Content-type
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+        },
+      };
 
-    let result = [];
+      // Data body
+      const body = JSON.stringify(formReg);
 
-    // panggil local storage dengan getItem
-    const localStorageData = localStorage.getItem("user");
-    // lakukan kondisi jika local storage ada isinya maka parsing data ke json lalu tampung ke result
-    if (localStorageData != null) {
-      result = JSON.parse(localStorageData);
+      // masukkan data user kedalam database
+      const response = await API.post("/register", body, config);
+
+      // Notification
+      if (response.data.code === 200) {
+        alert("Register Successfully");
+        navigate("/");
+        setShowReg(false);
+        setShowLog(true);
+
+        // kosongkan form
+        setFormReg({
+          name: "",
+          email: "",
+          password: "",
+          gender: "male",
+          phone: "",
+          address: "",
+        });
+      } else {
+        alert("Register failed slur")
+      }
+    } catch (err) {
+      alert("Register failed")
+      console.log(err);
     }
-
-    // create id unique lalu tampung ke variabel dataUser
-    let dataUser = { ...dataReg };
-    dataUser.id = new Date().getMilliseconds();
-
-    // push data ke result lalu setItem(set data) ke local storage dengan parsing json ke string lalu navigate
-    result.push(dataUser);
-    localStorage.setItem("user", JSON.stringify(result));
-    navigate("/");
-    alert("Register successfully");
-    setShowReg(false);
-    setShowLog(true);
-  };
+  });
   // end function register submit
   //---------------------------------------------------------------------
 
   // process login
-  const [login, setLogin] = useState({
+  const [formlogin, setFormLogin] = useState({
     email: "",
     password: "",
   });
 
+  const [state, dispatch] = useContext(UserContext)
+
   // function login
   const HandleChangeLogin = (event) => {
-    setLogin({ ...login, [event.target.name]: event.target.value });
+    setFormLogin({ ...formlogin, [event.target.name]: event.target.value });
   };
 
   // function login submit
-  const HandleLoginSubmit = (e) => {
+  const HandleLoginSubmit = useMutation(async (e) => {
     e.preventDefault();
+    try {
+      // konfigurasi Content-type
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+        },
+      };
 
-    // get data local storage dengan menggunakan getItem
-    let localStorageData = localStorage.getItem("user");
+      // Data body
+      const body = JSON.stringify(formlogin);
 
-    let result = [];
+      const response = await API.post("/login", body, config)
 
-    // jika local strorage ada datanya maka parse data ke json
-    if (localStorageData !== null) {
-      result = JSON.parse(localStorageData);
+      if(response.data.code === 200) {
+        dispatch({
+          type: "LOGIN_SUCCESS",
+          payload: response.data.data,
+        })
+      }
+      setShowLog(false)
+      alert("Login successfuly")
+      navigate("/")
+
+    } catch(err) {
+      alert("Login Failed")
+      console.log(err)
     }
-
-    // cek apakah email dan password yang diinputkan sudah sesuai dengan email dan password di local storage
-    const checkEmailAndPassword = result.filter((data) => {
-      return data.email === login.email && data.password === login.password;
-    })[0];
-
-    // jika checkEmailAndPassword true
-    if (checkEmailAndPassword) {
-      // set item local strorage key isLogin = true dan userLogin = id yang telah dimasukkan kedalam checkEmailAndPassword
-      localStorage.setItem("isLogin", true);
-      localStorage.setItem("userLogin", checkEmailAndPassword.id);
-
-      // jika data di checkEmailAndPassword valuenya == admin maka set item local storage "isAdmin"
-      checkEmailAndPassword.role === "admin" && localStorage.setItem("isAdmin", true);
-      
-      window.location.href = "/"
-      alert("Login successfully");
-      setShowLog(false);
-    } else {
-      alert("Email / password incorrect");
-    }
-  };
+    
+  });
   // end function login submit
 
   // process logout
   const HandleLogout = (e) => {
     e.preventDefault();
 
-    // hapus key di local storage
-    localStorage.removeItem("isLogin");
-    localStorage.removeItem("isAdmin");
-    localStorage.removeItem("userLogin");
-    navigate("/");
+    dispatch({
+      type: "LOGOUT",
+    })
+
     alert("Logout successfully");
+    navigate("/");
   };
   // end process logout
 
@@ -171,7 +192,7 @@ const Navbars = ({admin}) => {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto sub-navbar">
               {/* profile navbar */}
-              {/* jika isLogin = true maka tampilkan dropdown navbar, jika false tampilkan btn login & register*/}
+              {/* jika isLogin = true maka tampilkan dropdown user, jika false tampilkan btn login & register*/}
               {localStorage.getItem("isLogin") ? (
                 <>
                   {/* jika isAdmin = false maka tampilkan dropdown user, jika true maka tampilkan dropdown admin*/}
@@ -179,20 +200,22 @@ const Navbars = ({admin}) => {
                     <Navbar.Brand>
                       <img src={photoProfile} alt="" className="photo-profile"/>
                       {/* looping local storage lalu kondisikan*/}
-                      {localStorageData.map((data) => {
-                        // jika id.userLogin == id.user tampilkan dropdown 
-                        if (parseInt(localStorage.getItem("userLogin")) === data.id){
+                      {localStorageData.map((data, i) => {
+                        // jika id.userLogin == id.user tampilkan dropdown
+                        if (parseInt(localStorage.getItem("userLogin")) === data.id) {
                           return (
-                            <Dropdown as={ButtonGroup} className="dropdown"> <Dropdown.Toggle split variant="success" id="dropdown-split-basic" className="toggle-navbar"/>
+                            <Dropdown as={ButtonGroup} className="dropdown" key={i}>
+                              {" "}
+                              <Dropdown.Toggle split variant="success" id="dropdown-split-basic" className="toggle-navbar"/>
                               <Dropdown.Menu className="menu-dropdown">
                                 <Dropdown.Item onClick={() => navigate(`/profile/${data.id}`)}>
-                                  <img src={profile} alt=""/>
+                                  <img src={profile} alt="" />
                                 </Dropdown.Item>
                                 <Dropdown.Item onClick={() => navigate(`/payment/${data.id}`)}>
-                                  <img src={bill} alt=""/>
+                                  <img src={bill} alt="" />
                                 </Dropdown.Item>
                                 <Dropdown.Item onClick={HandleLogout}>
-                                  <img src={logout} alt=""/>
+                                  <img src={logout} alt="" />
                                 </Dropdown.Item>
                               </Dropdown.Menu>
                             </Dropdown>
@@ -202,32 +225,32 @@ const Navbars = ({admin}) => {
                     </Navbar.Brand>
                   ) : (
                     <Navbar.Brand>
-                      <img src={photoProfile} alt="" className="photo-profile"/>
+                      <img src={photoProfile} alt=""  className="photo-profile"/>
                       <Dropdown as={ButtonGroup} className="dropdown">
                         <Dropdown.Toggle split variant="success" id="dropdown-split-basic" className="toggle-navbar"/>
                         <Dropdown.Menu className="menu-dropdown">
                           <Dropdown.Item onClick={() => navigate(`/incom_trip`)}>
-                            <img src={trip} alt=""/>
+                            <img src={trip} alt="" />
                           </Dropdown.Item>
                           <Dropdown.Item onClick={HandleLogout}>
-                            <img src={logout} alt=""/>
+                            <img src={logout} alt="" />
                           </Dropdown.Item>
                         </Dropdown.Menu>
                       </Dropdown>
                     </Navbar.Brand>
-                // end profile navbar
+                    // end profile navbar
                   )}
                 </>
               ) : (
                 <>
                   {/* modal register */}
-                  <Nav.Link className="register" onClick={handleShowReg}> Register</Nav.Link>
+                  <Nav.Link className="register" onClick={handleShowReg}>{" "} Register </Nav.Link>
                   <Modal show={showReg} onHide={handleCloseReg} className="modal-register" size="lg">
                     <Modal.Body className="modal-body-register">
                       <h1 className="title-register">Register</h1>
                       <img src={leaf2} alt="" className="leaf2" />
                       <img src={leaf3} alt="" className="leaf3" />
-                      <Form>
+                      <Form onSubmit={HandleRegisterSubmit.mutate}>
                         <Form.Group className="form-group" controlId="formBasicEmail">
                           <Form.Label>Full Name</Form.Label>
                           <Form.Control type="text" name="name" onChange={HandleChangeRegister}/>
@@ -248,21 +271,21 @@ const Navbars = ({admin}) => {
                           <Form.Label>Address</Form.Label>
                           <Form.Control type="text" name="address" onChange={HandleChangeRegister}/>
                         </Form.Group>
-                        <Button variant="primary" type="submit" className="button-submit" onClick={HandleRegisterSubmit}> Submit</Button>
+                        <Button variant="primary" type="submit" className="button-submit">Submit</Button>
                       </Form>
                     </Modal.Body>
                   </Modal>
                   {/* end modal register */}
 
                   {/* modal login */}
-                  <Nav.Link className="login" onClick={handleShowLog}  >Login</Nav.Link>
+                  <Nav.Link className="login" onClick={handleShowLog}>Login</Nav.Link>
                   <Modal show={showLog} onHide={handleCloseLog} className="modal-login" size="lg">
                     <Modal.Body className="form-login">
                       <h1 className="title-login">Login</h1>
                       <img src={leaf2} alt="" className="leaf2" />
                       <img src={leaf3} alt="" className="leaf3" />
                       <Form>
-                        <Form.Group className="form-group" controlId="formBasicEmail">
+                        <Form.Group className="form-group" controlId="formBasicEmail"> 
                           <Form.Label>Email</Form.Label>
                           <Form.Control type="email" name="email" onChange={HandleChangeLogin}/>
                         </Form.Group>
@@ -270,7 +293,7 @@ const Navbars = ({admin}) => {
                           <Form.Label>Password</Form.Label>
                           <Form.Control type="password" name="password" onChange={HandleChangeLogin}/>
                         </Form.Group>
-                        <Button variant="primary" type="submit" className="button-submit"onClick={HandleLoginSubmit}>Submit</Button>
+                        <Button variant="primary" type="submit" className="button-submit" onClick={(e) => HandleLoginSubmit.mutate(e)}>Submit</Button>
                         <p>Don't have an account?<button className="btn-show-register" onClick={handleRegister}>Click here</button></p>
                       </Form>
                     </Modal.Body>
