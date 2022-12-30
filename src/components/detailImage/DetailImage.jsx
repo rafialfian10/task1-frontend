@@ -26,7 +26,6 @@ const DetailImage = () => {
 
     let { data: detailTrip} = useQuery('tripsCache', async () => {
         const response = await API.get(`/trip/${id}`);
-        // console.log(response)
         return response.data.data;
     });
 

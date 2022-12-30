@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useQuery } from 'react-query'
+import Swal from "sweetalert2";
 
 // image
 import plus from '../../assets/img/plus.png'
@@ -49,12 +50,18 @@ const Price = () => {
         }
     }
 
-    // handler show login
+    // handler show login (jika belum login maka lempar kembali ke halaman home)
     const showLogin = () => {
-        let login = JSON.parse(localStorage.getItem("isLogin"))
-        if(!login) {
-            navigate('/')
-            alert("Please login account")
+        let token = JSON.parse(localStorage.getItem("token"))
+        if(!token) {     
+            //alert
+            Swal.fire({
+                text: 'Please login account',
+                icon: 'warning',
+                confirmButtonText: 'Ok'
+            })
+            navigate("/")
+            
         } else {
             navigate(`/payment/:${id}`)
         }

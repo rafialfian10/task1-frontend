@@ -1,3 +1,10 @@
+/* eslint-disable no-lone-blocks */
+/* eslint-disable no-unused-vars */
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useMutation } from "react-query";
+import { useContext } from "react";
+
 // css
 import "./Navbar.scss";
 import "./Login.scss";
@@ -22,17 +29,15 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Dropdown from "react-bootstrap/Dropdown";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useMutation } from "react-query";
-import { useContext } from "react";
 import { UserContext } from "../../context/userContext";
+import { useQuery } from "react-query";
+import Swal from "sweetalert2";
 
 // api
 import { API } from "../../config/api";
 
 const Navbars = () => {
-  // navigate berfungsi untuk redirect kehalaman lain
+  const Swal = require('sweetalert2')
   const navigate = useNavigate();
 
   // Login modal login
@@ -93,7 +98,14 @@ const Navbars = () => {
 
       // Notification
       if (response.data.code === 200) {
-        alert("Register Successfully");
+
+        // alert
+        Swal.fire({
+          text: 'Register successfully',
+          icon: 'success',
+          confirmButtonText: 'Ok'
+        })
+
         navigate("/");
         setShowReg(false);
         setShowLog(true);
@@ -107,11 +119,15 @@ const Navbars = () => {
           phone: "",
           address: "",
         });
-      } else {
-        alert("Register failed slur")
-      }
+      } 
+
     } catch (err) {
-      alert("Register failed")
+      // alert
+        Swal.fire({
+          text: 'Register failed',
+          icon: 'error',
+          confirmButtonText: 'Ok'
+        })
       console.log(err);
     }
   });
@@ -124,9 +140,9 @@ const Navbars = () => {
     password: "",
   });
 
+  // user context
   const [state, dispatch] = useContext(UserContext)
 
-  // function login
   const HandleChangeLogin = (event) => {
     setFormLogin({ ...formlogin, [event.target.name]: event.target.value });
   };
@@ -154,11 +170,21 @@ const Navbars = () => {
         })
       }
       setShowLog(false)
-      alert("Login successfuly")
+      // alert
+      Swal.fire({
+        text: 'Login successfully',
+        icon: 'success',
+        confirmButtonText: 'Ok'
+      })
       navigate("/")
 
     } catch(err) {
-      alert("Login Failed")
+      // alert
+      Swal.fire({
+        text: 'Login failed (email / password incorrect)',
+        icon: 'error',
+        confirmButtonText: 'Ok'
+      })
       console.log(err)
     }
     
@@ -169,17 +195,35 @@ const Navbars = () => {
   const HandleLogout = (e) => {
     e.preventDefault();
 
-    dispatch({
-      type: "LOGOUT",
+    // alert
+    Swal.fire({
+      title: 'Are you sure?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          icon: 'success',
+          text: 'Logout successfully'
+      })
+      // logout dan hapus token
+      dispatch({
+        type: "LOGOUT",
+      })
+        navigate("/");
+      }
     })
-
-    alert("Logout successfully");
-    navigate("/");
   };
   // end process logout
 
-  //get local storage
-  const localStorageData = JSON.parse(localStorage.getItem("user"));
+  // get local data users
+  let { data: users} = useQuery('usersCache', async () => {
+    const response = await API.get(`/users`);
+    return response.data.data;
+  });
 
   return (
     <>
@@ -192,38 +236,11 @@ const Navbars = () => {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto sub-navbar">
               {/* profile navbar */}
-              {/* jika isLogin = true maka tampilkan dropdown user, jika false tampilkan btn login & register*/}
-              {localStorage.getItem("isLogin") ? (
+              {/* jika token = true maka tampilkan dropdown user, jika false tampilkan btn login & register*/}
+              {localStorage.getItem("token") ? (
                 <>
-                  {/* jika isAdmin = false maka tampilkan dropdown user, jika true maka tampilkan dropdown admin*/}
-                  {!localStorage.getItem("isAdmin") ? (
-                    <Navbar.Brand>
-                      <img src={photoProfile} alt="" className="photo-profile"/>
-                      {/* looping local storage lalu kondisikan*/}
-                      {localStorageData.map((data, i) => {
-                        // jika id.userLogin == id.user tampilkan dropdown
-                        if (parseInt(localStorage.getItem("userLogin")) === data.id) {
-                          return (
-                            <Dropdown as={ButtonGroup} className="dropdown" key={i}>
-                              {" "}
-                              <Dropdown.Toggle split variant="success" id="dropdown-split-basic" className="toggle-navbar"/>
-                              <Dropdown.Menu className="menu-dropdown">
-                                <Dropdown.Item onClick={() => navigate(`/profile/${data.id}`)}>
-                                  <img src={profile} alt="" />
-                                </Dropdown.Item>
-                                <Dropdown.Item onClick={() => navigate(`/payment/${data.id}`)}>
-                                  <img src={bill} alt="" />
-                                </Dropdown.Item>
-                                <Dropdown.Item onClick={HandleLogout}>
-                                  <img src={logout} alt="" />
-                                </Dropdown.Item>
-                              </Dropdown.Menu>
-                            </Dropdown>
-                          );
-                        }
-                      })}
-                    </Navbar.Brand>
-                  ) : (
+                  {/* jika isAdmin = false maka tampilkan dropdown user, jika true maka tampilkan dropdown admin */}
+                  {localStorage.getItem("role") === "admin" ? 
                     <Navbar.Brand>
                       <img src={photoProfile} alt=""  className="photo-profile"/>
                       <Dropdown as={ButtonGroup} className="dropdown">
@@ -238,8 +255,34 @@ const Navbars = () => {
                         </Dropdown.Menu>
                       </Dropdown>
                     </Navbar.Brand>
+                   : 
+                    <Navbar.Brand>
+                   <img src={photoProfile} alt="" className="photo-profile"/>
+                   
+                   {users?.map((user, i) => {
+                      // jika localstorage === user.name tampilkan dropdown
+                      {if(localStorage.getItem("name") === user.name) {
+                        return (
+                          <Dropdown as={ButtonGroup} className="dropdown" key={i}>
+                            <Dropdown.Toggle split variant="success" id="dropdown-split-basic" className="toggle-navbar"/>
+                            <Dropdown.Menu className="menu-dropdown">
+                              <Dropdown.Item onClick={() => navigate(`/profile/${user.id}`)}>
+                                <img src={profile} alt="" />
+                              </Dropdown.Item>
+                              <Dropdown.Item onClick={() => navigate(`/payment/${user.id}`)}>
+                                <img src={bill} alt="" />
+                              </Dropdown.Item>
+                              <Dropdown.Item onClick={HandleLogout}>
+                                <img src={logout} alt="" />
+                              </Dropdown.Item>
+                            </Dropdown.Menu>
+                          </Dropdown>
+                        )
+                      }}
+                    })}
+                    </Navbar.Brand>
                     // end profile navbar
-                  )}
+                  }
                 </>
               ) : (
                 <>
