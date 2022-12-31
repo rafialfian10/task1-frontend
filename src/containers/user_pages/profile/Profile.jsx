@@ -77,8 +77,6 @@ const Profile = () => {
         return response.data.data;
     });
 
-    console.log()
-
     return (
         <>  
             {/* card profile */}
@@ -122,7 +120,7 @@ const Profile = () => {
                     handleSubmitImage.mutate(e)}}>
                         <img src={user?.image} alt=""/>
                         <Form.Control type="file" id="image" className="form-input input-image" name="image" onChange={handleChange}/>
-                        <button type='submit' onClick={() => {document.getElementById("image").click()}}>Change Photo Profile</button>
+                        <button type='submit'>Change Photo Profile</button>
                     </Form>
                 </div>
             </div>

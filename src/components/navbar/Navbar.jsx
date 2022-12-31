@@ -19,6 +19,7 @@ import profile from "../../assets/img/profile-navbar.png";
 import bill from "../../assets/img/bill.png";
 import logout from "../../assets/img/logout.png";
 import trip from "../../assets/img/trip.png";
+import defaultPhoto from "../../assets/img/default-photo.png";
 
 // components
 import Container from "react-bootstrap/Container";
@@ -70,9 +71,10 @@ const Navbars = () => {
     name: "",
     email: "",
     password: "",
-    gender: "male",
+    gender: "",
     phone: "",
     address: "",
+    image: defaultPhoto,
   });
 
   const HandleChangeRegister = (event) => {
@@ -86,7 +88,7 @@ const Navbars = () => {
       // konfigurasi Content-type
       const config = {
         headers: {
-          "Content-type": "application/json",
+          "Content-type": "multipart/form-data",
         },
       };
 
@@ -115,9 +117,10 @@ const Navbars = () => {
           name: "",
           email: "",
           password: "",
-          gender: "male",
+          gender: "",
           phone: "",
           address: "",
+          image: "",
         });
       } 
 
@@ -307,6 +310,14 @@ const Navbars = () => {
                         <Form.Group className="form-group" controlId="formBasicPassword">
                           <Form.Label>Password</Form.Label>
                           <Form.Control type="password" name="password" onChange={HandleChangeRegister}/>
+                        </Form.Group>
+                        <Form.Group className="form-group form-dropdown">
+                        <Form.Label>Gender</Form.Label>
+                        <Form.Select aria-label="Default select example" name="gender" className="form-input" onChange={HandleChangeRegister}>
+                            <option value=""></option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </Form.Select>
                         </Form.Group>
                         <Form.Group className="form-group" controlId="formBasicPassword">
                           <Form.Label>Phone</Form.Label>
