@@ -27,7 +27,7 @@ const Payment = () => {
   id = parseInt(id); 
 
   // get local storage user
-  let localStoragedata = JSON.parse(localStorage.getItem("user"));
+  let localStoragedata = JSON.parse(localStorage.getItem("role") === "user");
 
   return (
     <>
@@ -77,9 +77,9 @@ const Payment = () => {
           </div>
         </div>
 
-        {localStoragedata.map((data,i ) =>
-            data.id === id && (
-              <Table striped bordered hover className="tables" key={i}>
+        {/* {localStoragedata.map((data,i ) => */}
+            {/* data.id === id && ( */}
+              <Table striped bordered hover className="tables">
                 <thead>
                   <tr>
                     <th>No</th>
@@ -93,9 +93,9 @@ const Payment = () => {
                 <tbody>
                   <tr>
                     <td>1</td>
-                    <td>{data.name}</td>
+                    <td>Rafi Alfian</td>
                     <td>Male</td>
-                    <td>{data.phone}</td>
+                    <td>08979638899</td>
                     <td className="fw-bold">Qty</td>
                     <td className="fw-bold">: {qty2 = qty}</td>
                   </tr>
@@ -109,8 +109,8 @@ const Payment = () => {
                   </tr>
                 </tbody>
               </Table>
-            )
-        )}
+            {/* ) */}
+        {/* )} */}
       </div>
       <div className="btn-pay">
         <button type="submit" onClick={() => setPopup(true)}>Pay</button>

@@ -257,26 +257,28 @@ const Navbars = () => {
                     </Navbar.Brand>
                    : 
                     <Navbar.Brand>
-                   <img src={photoProfile} alt="" className="photo-profile"/>
-                   
+                   {/* looping data users */}
                    {users?.map((user, i) => {
-                      // jika localstorage === user.name tampilkan dropdown
-                      {if(localStorage.getItem("name") === user.name) {
-                        return (
-                          <Dropdown as={ButtonGroup} className="dropdown" key={i}>
-                            <Dropdown.Toggle split variant="success" id="dropdown-split-basic" className="toggle-navbar"/>
-                            <Dropdown.Menu className="menu-dropdown">
-                              <Dropdown.Item onClick={() => navigate(`/profile/${user.id}`)}>
-                                <img src={profile} alt="" />
-                              </Dropdown.Item>
-                              <Dropdown.Item onClick={() => navigate(`/payment/${user.id}`)}>
-                                <img src={bill} alt="" />
-                              </Dropdown.Item>
-                              <Dropdown.Item onClick={HandleLogout}>
-                                <img src={logout} alt="" />
-                              </Dropdown.Item>
-                            </Dropdown.Menu>
-                          </Dropdown>
+                     // jika localstorage === user.name tampilkan dropdown
+                     {if(localStorage.getItem("name") === user.name) {
+                       return (
+                          <>
+                            <img src={user.image} alt="" className="photo-profile"/>
+                            <Dropdown as={ButtonGroup} className="dropdown" key={i}>
+                              <Dropdown.Toggle split variant="success" id="dropdown-split-basic" className="toggle-navbar"/>
+                              <Dropdown.Menu className="menu-dropdown">
+                                <Dropdown.Item onClick={() => navigate(`/profile/${user.id}`)}>
+                                  <img src={profile} alt="" />
+                                </Dropdown.Item>
+                                <Dropdown.Item onClick={() => navigate(`/payment/${user.id}`)}>
+                                  <img src={bill} alt="" />
+                                </Dropdown.Item>
+                                <Dropdown.Item onClick={HandleLogout}>
+                                  <img src={logout} alt="" />
+                                </Dropdown.Item>
+                              </Dropdown.Menu>
+                            </Dropdown>
+                          </>
                         )
                       }}
                     })}

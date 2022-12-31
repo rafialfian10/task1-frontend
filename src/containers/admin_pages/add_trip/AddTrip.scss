@@ -33,8 +33,28 @@ h2.add-trip-title {
     align-items: center;
 }
 
-.day, .night {
-    width: 20%;
+.day-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.sub-day-content {
+  display: flex;
+  align-items: center;
+}
+
+.sub-night-content {
+  display: flex;
+  align-items: center;
+}
+
+.night-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.day-content .day, .night-content .night {
+    width: 95%;
     margin-right: 30px;
 }
 

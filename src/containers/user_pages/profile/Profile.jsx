@@ -1,9 +1,14 @@
+/* eslint-disable no-unused-vars */
 // components
 import Table from 'react-bootstrap/Table';
+import Form from 'react-bootstrap/Form';
 import { useParams } from 'react-router-dom';
 import {title2, country2} from '../../../containers/user_pages/payment/Payment'
 import { API } from '../../../config/api';
 import { useQuery } from 'react-query';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useMutation } from 'react-query';
 
 // css
 import './Profile.scss'
@@ -13,22 +18,66 @@ import profile from '../../../assets/img/profile.png'
 import map from '../../../assets/img/map.png'
 import phone from '../../../assets/img/phone.png'
 import message from '../../../assets/img/message.png'
-import user1 from '../../../assets/img/user1.png'
 import icon from '../../../assets/img/icon.png' 
 import qr_code from '../../../assets/img/qr-code.png' 
 
 const Profile = () => {
 
-     // Get parameter
-     let {id}= useParams()
-     id = parseInt(id)
- 
-     let { data: user} = useQuery('userCache', async () => {
-         const response = await API.get(`/user/${id}`);
-         return response.data.data;
-     });
+    const navigate = useNavigate()
 
-     console.log("Data user:", user)
+    let {id}= useParams()
+    id = parseInt(id)
+    
+    // add photo profile
+    const [preview, setPreview] = useState(null)
+
+    // buat usestate untuk menampung data sementara
+    const [form, setForm] = useState({
+        image: '',
+    })
+
+    // function handlechange data di form
+    const handleChange = (e) => {
+        setForm({
+        ...form,
+        [e.target.name]:
+            e.target.type === 'file' ? e.target.files : e.target.value,
+        })
+
+        // buat url image
+        if (e.target.type === 'file') {
+            let url = URL.createObjectURL(e.target.files[0]);
+            setPreview(url);
+        }   
+    }
+
+    // handle submit image
+    const handleSubmitImage = useMutation( async () => {
+        try {
+            // konfigurasi file
+            // form data
+            let formData = new FormData();
+            formData.append('image', form.image[0]);
+
+             // Insert trip data
+            const response = await API.patch(`/user/${id}`, formData, {
+                headers:{
+                    'Authorization': localStorage.getItem("token")
+                }
+            });
+
+        } catch (err) {
+            console.log(err)
+        }
+    })
+
+    // get data user
+    let { data: user} = useQuery('userCache', async () => {
+        const response = await API.get(`/user/${id}`);
+        return response.data.data;
+    });
+
+    console.log()
 
     return (
         <>  
@@ -69,8 +118,12 @@ const Profile = () => {
                 </>
                 
                 <div className='content-profile2'>
-                    <img src={user1} alt="" />
-                    <button type='submit'>Change Photo Profile</button>
+                    <Form onSubmit={(e) => {e.preventDefault()
+                    handleSubmitImage.mutate(e)}}>
+                        <img src={user?.image} alt=""/>
+                        <Form.Control type="file" id="image" className="form-input input-image" name="image" onChange={handleChange}/>
+                        <button type='submit' onClick={() => {document.getElementById("image").click()}}>Change Photo Profile</button>
+                    </Form>
                 </div>
             </div>
             {/* // end card profile */}

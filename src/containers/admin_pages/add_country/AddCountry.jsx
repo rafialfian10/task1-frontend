@@ -1,9 +1,11 @@
 // components
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import Swal from "sweetalert2";
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import ReactFlagsSelect from "react-flags-select";
 
 // API
 import { API } from '../../../config/api';
@@ -17,8 +19,13 @@ const AddCountry = () => {
 
     // buat usestate untuk menampung data sementara
     const [form, setForm] = useState({
-        name: '',
-    })
+        name: "",
+    });
+
+    // state error
+    const [error, setError] = useState({
+        name: "",
+      });
 
     // function handlechange data di form
     const handleChange = (e) => {
@@ -32,22 +39,41 @@ const AddCountry = () => {
             const config = {
                 headers: {
                 'Content-type': 'multipart/form-data',
+                'Authorization': localStorage.getItem("token")
                 },
             };
 
+            const messageError = {
+                name: "",
+            }
 
-            // form data
-            const formData = new FormData();
-            formData.append('name', form.name);
+             // validasi form title
+             if (form.name === "") {
+                messageError.name = "Country must be filled out";
+            } else {
+                messageError.name = ""
+            }
 
-            console.log("Form :", form)
+            // jika semua message error kosong
+            if(messageError.name === "") {
+                // form data
+                const formData = new FormData();
+                formData.append('name', form.name);
 
-             // Insert trip data
-            const response = await API.post('/country', formData, config);
-            console.log("Response :", response);
+                // Insert trip data
+                const response = await API.post('/country', formData, config);
+                console.log("Response :", response);
 
-            navigate('/list_transaction');
+                Swal.fire({
+                    text: 'Country successfully added',
+                    icon: 'success',
+                    confirmButtonText: 'Ok'
+                })
 
+                navigate('/incom_trip');
+            } else {
+                setError(messageError)
+            }
         } catch (err) {
             console.log(err)
         }
@@ -61,9 +87,11 @@ const AddCountry = () => {
                  handleSubmit.mutate(e)}}>
                     <Form.Group className="form-group">
                     <Form.Label>Country</Form.Label>
-                    <Form.Control className="form-input" name="name" type="text" onChange={handleChange}/>
+                    {/* <Form.Control className="form-input" id="name" name="name" onChange={handleChange}/> */}
+                    <ReactFlagsSelect className="form-input flag-input" name="name" onChange={handleChange} selected={form} onSelect={(code) => {setForm(code); console.log("form",form)}}/>
+                  
+                    {error.name && <Form.Text className="text-danger">{error.name}</Form.Text>}
                     </Form.Group>
-
                     <Button variant="primary" type="submit" className='button-add-country'>Add Country</Button>
                 </Form>
             </div>

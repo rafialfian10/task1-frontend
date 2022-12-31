@@ -16,8 +16,15 @@ import ModalApproved from "./containers/admin_pages/modal_approved/ModalApproved
 import AddTrip from "./containers/admin_pages/add_trip/AddTrip";
 import PaymentPending from "./containers/user_pages/payment_pending/PaymentPending";
 import AddCountry from "./containers/admin_pages/add_country/AddCountry";
+import { setAuthToken } from "./config/api";
+
+if(localStorage.token) {
+  setAuthToken(localStorage.token)
+}
 
 function App() {
+
+
 
   return (
     <Router>

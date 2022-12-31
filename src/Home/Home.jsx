@@ -18,9 +18,8 @@ const Home = () => {
 
   // jika sewaktu halaman dirender pertama kali ada local storage isAdmin maka navigate
   useEffect(() => {
-    JSON.parse(localStorage.getItem("role") === "admin") &&
+    localStorage.getItem("role") === "admin" &&
     navigate("/list_transaction");
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
 
