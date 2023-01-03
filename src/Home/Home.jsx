@@ -12,7 +12,7 @@ import Card1 from "../components/card1/Card1";
 import Card2 from "../components/card2/Card2";
 import { useNavigate } from "react-router-dom";
 
-const Home = () => {
+const Home = (props) => {
 
   const navigate = useNavigate();
 
@@ -21,7 +21,6 @@ const Home = () => {
     localStorage.getItem("role") === "admin" &&
     navigate("/list_transaction");
   }, []);
-
 
   return (
     <>

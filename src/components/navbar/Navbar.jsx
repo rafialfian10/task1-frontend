@@ -1,5 +1,4 @@
 /* eslint-disable no-lone-blocks */
-/* eslint-disable no-unused-vars */
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "react-query";
@@ -20,6 +19,7 @@ import bill from "../../assets/img/bill.png";
 import logout from "../../assets/img/logout.png";
 import trip from "../../assets/img/trip.png";
 import defaultPhoto from "../../assets/img/default-photo.png";
+import country from "../../assets/img/country.png";
 
 // components
 import Container from "react-bootstrap/Container";
@@ -74,7 +74,7 @@ const Navbars = () => {
     gender: "",
     phone: "",
     address: "",
-    image: defaultPhoto,
+    image: "",
   });
 
   const HandleChangeRegister = (event) => {
@@ -252,6 +252,10 @@ const Navbars = () => {
                           <Dropdown.Item onClick={() => navigate(`/incom_trip`)}>
                             <img src={trip} alt="" />
                           </Dropdown.Item>
+                          <Dropdown.Item onClick={() => navigate(`/list_country`)}>
+                            <img src={country} alt="" className="d-inline" />
+                            <p className="text-country">Country</p>
+                          </Dropdown.Item>
                           <Dropdown.Item onClick={HandleLogout}>
                             <img src={logout} alt="" />
                           </Dropdown.Item>
@@ -266,7 +270,9 @@ const Navbars = () => {
                      {if(localStorage.getItem("name") === user.name) {
                        return (
                           <>
-                            <img src={user.image} alt="" className="photo-profile"/>
+                          {/* default photo */}
+                           {user.image !== "http://localhost:5000/uploads/" ?  (<img src={user.image} className="photo-profile" alt="" />) : (<img src={defaultPhoto} className="photo-profile" alt="" /> )} 
+                           {/* <img src={user.image} className="photo-profile" alt="" /> */}
                             <Dropdown as={ButtonGroup} className="dropdown" key={i}>
                               <Dropdown.Toggle split variant="success" id="dropdown-split-basic" className="toggle-navbar"/>
                               <Dropdown.Menu className="menu-dropdown">

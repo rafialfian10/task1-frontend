@@ -33,7 +33,7 @@ const DetailImage = () => {
         <>
             <div className='detail-img-container'>
                 <h1 className='title-detail'>{detailTrip?.title}</h1>
-                <p className='title-country'>{detailTrip?.country.name}</p>
+                <p className='title-country'>{detailTrip?.country?.name}</p>
                 <div className="thumbnail">
                     <img src={detailTrip?.image} className="img-thumbnail" alt=""/>
                     <img src={hibiscus} alt="" className='detail-hibiscus' />

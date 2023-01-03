@@ -26,11 +26,21 @@ const Price = () => {
   let {id}= useParams()
   id = parseInt(id)
 
-  const [number, setNumber] = useState(1)
+  const [number, setNumber] = useState(0)
 
   // HandlerPlus Function
   const HandlerPlus = () => {
       setNumber(number+1)
+      if (number === detailTrips?.quota){
+        setNumber(detailTrips?.quota)
+        Swal.fire({
+          text: 'Quota is empty',
+          icon: 'error',
+          confirmButtonText: 'Ok'
+        })
+      } else if(detailTrips?.quota === 0){
+        setNumber(detailTrips?.quota)
+      }
   }
 
   //HandlerMinus Function
@@ -43,15 +53,12 @@ const Price = () => {
   }
 
   useEffect(() => {
-    //change this to the script source you want to load, for example this is snap.js sandbox env
-    const midtransScriptUrl = "https://app.sandbox.midtrans.com/snap/snap.js";
-    //change this according to your client-key
-    const myMidtransClientKey = "SB-Mid-client-xBHWdiuU4aVE9vOq";
+    const midtransScriptUrl = "https://app.sandbox.midtrans.com/snap/snap.js"; // panngil snap middtrans
+    const myMidtransClientKey = "SB-Mid-client-xBHWdiuU4aVE9vOq"; // clint key untuk custom snap
   
     let scriptTag = document.createElement("script");
     scriptTag.src = midtransScriptUrl;
-    // optional if you want to set script attribute
-    // for example snap.js have data-client-key attribute
+   
     scriptTag.setAttribute("data-client-key", myMidtransClientKey);
   
     document.body.appendChild(scriptTag);
@@ -61,7 +68,7 @@ const Price = () => {
   }, []);
   //----------------------------------------
 
- // handle snap buy
+ // handle snap buy (parameter dari trip yang dilooping)
  const handleBuy = useMutation(async (trip) => {
   try {
     // Get data from trip
@@ -95,17 +102,45 @@ const Price = () => {
     window.snap.pay(token, {
       onSuccess: function (result) {
         console.log(result);
-      //   history.push("/profile");
+        Swal.fire({
+          text: 'Transaction success',
+          icon: 'success',
+          confirmButtonText: 'Ok'
+        })
+        navigate(`/profile/${id}`);
+        window.location.reload()
       },
       onPending: function (result) {
         console.log(result);
-      //   history.push("/profile");
+        navigate(`/detail/${id}`);
+        window.location.reload()
       },
       onError: function (result) {
         console.log(result);
+        Swal.fire({
+          title: 'Are you sure to cancel transaction?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire({
+              icon: 'success',
+              text: 'cancel transaction successfully'
+        })
+        }
+        })
+        navigate(`/detail/${id}`)
+        
       },
       onClose: function () {
-        alert("jangan kabur belum bayar lo! bayar dulu dek 😢");
+        Swal.fire({
+          text: 'please make payment first',
+          confirmButtonText: 'Ok'
+        })
+
       },
     })
 
@@ -122,7 +157,6 @@ let { data: detailTrips} = useQuery('tripsCache', async () => {
   return response.data.data;
 });
     
-
 // handler show login (jika belum login maka lempar kembali ke halaman home)
 const showLogin = () => {
   let token = localStorage.getItem("token")
@@ -133,11 +167,8 @@ const showLogin = () => {
           icon: 'warning',
           confirmButtonText: 'Ok'
       })
-      navigate("/")
-      
-  } else {
-      navigate(`/payment/:${id}`)
-  }
+      navigate("/")  
+  } 
 }
 
     return (
@@ -145,11 +176,12 @@ const showLogin = () => {
             <div className='price-container'>
                 <div className='line1'>
                     <div className='sub-line1'>
-                        <h5 className='price'>IDR. {detailTrips?.price.toLocaleString()}</h5>
+                        <h5 className='price'>IDR. {detailTrips?.price?.toLocaleString()}</h5>
                         <h5 className='person'> / Person</h5>
                     </div>
                     <div className='sub-line2'>
                         <button  onClick={HandlerMinus} className='minus'><img src={minus} alt=""/></button>
+                        {/* {number > detailTrips?.quota ? <p>Quota empty</p> : <h5 className='value'>{number}</h5> } */}
                         <h5 className='value'>{number}</h5>
                         <button onClick={HandlerPlus}><img src={plus} alt=""/></button>
                     </div>
@@ -167,7 +199,7 @@ const showLogin = () => {
                     <hr />
                         
                     <div className='btn-submit'>
-                        <button type='submit' onClick={() => handleBuy.mutate(detailTrips)}>BOOK NOW</button>
+                        <button type='submit' onClick={() => {handleBuy.mutate(detailTrips); showLogin()}}>BOOK NOW</button>
                     </div>                           
                 </div>
         </>
